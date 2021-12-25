@@ -19,7 +19,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest.PMEntityTests
     {
         private PMAutomation _powerMILL;
 
-        [TestFixtureSetUp]
+        [SetUp]
         public void TestFixtureSetup()
         {
             _powerMILL = new PMAutomation(InstanceReuse.UseExistingInstance);
@@ -27,7 +27,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest.PMEntityTests
             _powerMILL.CloseProject();
         }
 
-        [TestFixtureTearDown]
+        [OneTimeTearDown]
         public void TestFixtureTearDown()
         {
         }
@@ -73,7 +73,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest.PMEntityTests
             {
                 expected = "c:\\OutputFileName2";
             }
-            Assert.AreEqual(expected, nc.OutputFileName, $"Expected property 'OutputFileName' to change to '{expected}'");
+            Assert.AreEqual(expected, nc.OutputFileName, string.Format("Expected property 'OutputFileName' to change to '{0}'",expected));
         }
 
         [Test]

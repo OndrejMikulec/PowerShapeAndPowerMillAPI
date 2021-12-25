@@ -21,7 +21,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest.PMEntityTests
         private PMAutomation _powerMill;
         private const double TOLERANCE = 0.00001;
 
-        [TestFixtureSetUp]
+        [SetUp]
         public void TestFixtureSetup()
         {
             _powerMill = new PMAutomation(InstanceReuse.UseExistingInstance);
@@ -29,7 +29,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest.PMEntityTests
             _powerMill.CloseProject();
         }
 
-        [TestFixtureTearDown]
+        [OneTimeTearDown]
         public void TestFixtureTearDown()
         {
         }

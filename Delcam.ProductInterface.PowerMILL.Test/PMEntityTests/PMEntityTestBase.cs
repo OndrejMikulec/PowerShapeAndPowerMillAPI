@@ -139,7 +139,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest.PMEntityTests
             return tmpFolder;
         }
 
-        [TestFixtureTearDown]
+        [OneTimeTearDown]
         public void FixtureTearDown()
         {
             try

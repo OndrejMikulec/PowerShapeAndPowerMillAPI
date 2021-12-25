@@ -71,14 +71,22 @@ namespace Autodesk.ProductInterface.PowerMILLTest.Files
         {
             var directoryInfo = new DirectoryInfo(DIRECTORY);
             var results = directoryInfo.GetFiles(fullName, SearchOption.AllDirectories);
-            return results.FirstOrDefault()?.FullName;
+            FileInfo output = results.FirstOrDefault();
+            if (output != null) {
+            	return output.FullName;
+            }
+            return null;
         }
 
         public static Directory FetchDirectory(string fullName)
         {
             var dir = new DirectoryInfo(DIRECTORY);
             var result = dir.GetDirectories(fullName, SearchOption.AllDirectories);
-            return new Directory(result.FirstOrDefault()?.FullName);
+            DirectoryInfo output =  result.FirstOrDefault();
+            if (output != null) {
+            	return new Directory(output.FullName);
+            }
+            return null;
         }
     }
 }

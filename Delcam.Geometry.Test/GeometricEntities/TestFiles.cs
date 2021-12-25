@@ -35,7 +35,11 @@ namespace Autodesk.Geometry.Test.GeometricEntities
         {
             var directoryInfo = new DirectoryInfo(DIRECTORY);
             var results = directoryInfo.GetFiles(fullName, SearchOption.AllDirectories);
-            return results.FirstOrDefault()?.FullName;
+            FileInfo output = results.FirstOrDefault();
+            if (output != null) {
+            	return output.FullName;
+            }
+            return null;
         }
     }
 }

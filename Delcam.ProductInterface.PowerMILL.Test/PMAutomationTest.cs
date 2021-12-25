@@ -34,7 +34,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest
             _powerMill = new PMAutomation(InstanceReuse.UseExistingInstance);
         }
 
-        [TestFixtureTearDown]
+        [OneTimeTearDown]
         public void LeavingAutomationTest()
         {
             _powerMill = new PMAutomation(InstanceReuse.UseExistingInstance);

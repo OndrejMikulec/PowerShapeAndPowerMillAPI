@@ -18,7 +18,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest.CollectionTests
     {
         private PMAutomation _powerMILL;
 
-        [TestFixtureSetUp]
+        [SetUp]
         public void TestFixtureSetup()
         {
             _powerMILL = new PMAutomation(InstanceReuse.UseExistingInstance);
@@ -26,7 +26,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest.CollectionTests
             _powerMILL.CloseProject();
         }
 
-        [TestFixtureTearDown]
+        [OneTimeTearDown]
         public void TestFixtureTearDown()
         {
         }
