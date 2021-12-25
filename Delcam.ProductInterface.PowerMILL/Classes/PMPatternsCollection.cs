@@ -49,12 +49,7 @@ namespace Autodesk.ProductInterface.PowerMILL
         /// </summary>
         internal List<string> ReadPatterns()
         {
-            List<string> names = new List<string>();
-            foreach (var pattern in _powerMILL.PowerMILLProject.Patterns)
-            {
-                names.Add(pattern.Name);
-            }
-            return names;
+            return ExtractFunction.ReadPatterns(_powerMILL);
         }
 
         /// <summary>

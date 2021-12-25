@@ -91,6 +91,7 @@
     <Compile Include="Classes\Boundary\PMBoundarySilhouette.cs" />
     <Compile Include="Classes\Boundary\PMBoundaryStockModelRest.cs" />
     <Compile Include="Classes\Boundary\PMBoundaryUserDefined.cs" />
+    <Compile Include="Classes\Functions\ExtractFunction.cs" />
     <Compile Include="Classes\PMFeatureGroup.cs" />
     <Compile Include="Classes\PMFeatureGroupsCollection.cs" />
     <Compile Include="Classes\PMSetup.cs" />
@@ -271,6 +272,9 @@
       <Project>{1e2ec09f-d066-4ed3-86f1-8c22e01de694}</Project>
       <Name>Delcam.Utilities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Classes\Functions" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

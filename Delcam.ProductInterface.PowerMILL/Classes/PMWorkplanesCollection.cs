@@ -48,12 +48,7 @@ namespace Autodesk.ProductInterface.PowerMILL
         /// </summary>
         internal List<string> ReadWorkplanes()
         {
-            List<string> names = new List<string>();
-            foreach (var workplane in _powerMILL.PowerMILLProject.Workplanes)
-            {
-                names.Add(workplane.Name);
-            }
-            return names;
+            return ExtractFunction.ReadWorkplanes(_powerMILL);
         }
 
         /// <summary>

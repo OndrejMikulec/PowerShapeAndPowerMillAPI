@@ -48,12 +48,7 @@ namespace Autodesk.ProductInterface.PowerMILL
         /// <returns>The list of names of all tools in PowerMILL.</returns>
         internal List<string> ReadMachineTools()
         {
-            List<string> names = new List<string>();
-            foreach (var machineTool in _powerMILL.PowerMILLProject.MachineTools)
-            {
-                names.Add(machineTool.Name);
-            }
-            return names;
+            return ExtractFunction.ReadMachineTools(_powerMILL);
         }
 
         #endregion

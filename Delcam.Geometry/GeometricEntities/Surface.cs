@@ -130,12 +130,22 @@ namespace Autodesk.Geometry.GeometricEntities
         /// <summary>
         /// Gets the list of laterals.
         /// </summary>
-        public List<Spline> Laterals => _laterals;
+        public List<Spline> Laterals
+        {
+        	get {
+        		return _laterals;
+        	}
+        }
 
         /// <summary>
         /// Gets the list of longitudinals.
         /// </summary>
-        public List<Spline> Longitudinals => _longitudinals;
+        public List<Spline> Longitudinals
+        {
+        	get {
+        		return _longitudinals;
+        	}
+        }
 
         #endregion
 

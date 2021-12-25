@@ -8,6 +8,8 @@
 // **********************************************************************
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Autodesk.ProductInterface.PowerMILL
 {
@@ -50,6 +52,16 @@ namespace Autodesk.ProductInterface.PowerMILL
             {
                 base.Add(entity);
             }
+        }
+        
+         /// <summary>
+        /// Adds a new Entities to the List.
+        /// </summary>
+        public override void AddRange(IEnumerable<T> entities)
+        {
+			var enumerable = entities.Where(item => !Contains(item));
+			base.AddRange(enumerable);
+
         }
 
         /// <summary>

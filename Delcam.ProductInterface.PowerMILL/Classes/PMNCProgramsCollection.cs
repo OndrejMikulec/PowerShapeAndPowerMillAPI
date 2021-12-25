@@ -47,12 +47,7 @@ namespace Autodesk.ProductInterface.PowerMILL
         /// </summary>
         internal List<string> ReadNCPrograms()
         {
-            List<string> names = new List<string>();
-            foreach (var ncProgram in _powerMILL.PowerMILLProject.NCPrograms)
-            {
-                names.Add(ncProgram.Name);
-            }
-            return names;
+            return ExtractFunction.ReadNCPrograms(_powerMILL);
         }
 
         /// <summary>

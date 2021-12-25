@@ -8,6 +8,8 @@
 // **********************************************************************
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Autodesk.ProductInterface.PowerMILL
 {
@@ -17,7 +19,7 @@ namespace Autodesk.ProductInterface.PowerMILL
     /// <remarks></remarks>
     internal class PMToolpathEntityFactory
     {
-        /// <summary>
+    	/// <summary>
         /// Creates a new toolpath based on its strategy.
         /// </summary>
         /// <param name="powerMILL">The base instance to interact with PowerMILL.</param>
@@ -25,126 +27,200 @@ namespace Autodesk.ProductInterface.PowerMILL
         /// <returns>The new tool instance</returns>
         internal static PMToolpath CreateEntity(PMAutomation powerMILL, string name)
         {
-            switch (
-                powerMILL.DoCommandEx("PRINT PAR TERSE \"entity('toolpath', '" + name + "').strategy\"")
-                         .ToString()
-                         .Trim())
-            {
-                case "raster":
-                    return new PMToolpathRasterFinishing(powerMILL, name);
-                case "radial":
-                    return new PMToolpathRadialFinishing(powerMILL, name);
-                case "spiral":
-                    return new PMToolpathSpiralFinishing(powerMILL, name);
-                case "pattern":
-                    return new PMToolpathPatternFinishing(powerMILL, name);
-                case "com_pattern":
-                    return new PMToolpathCommittedPattern(powerMILL, name);
-                case "com_boundary":
-                    return new PMToolpathCommittedBoundary(powerMILL, name);
-                case "constantz":
-                    return new PMToolpathConstantZFinishing(powerMILL, name);
-                case "offset_3d":
-                    return new PMToolpath3DOffsetFinishing(powerMILL, name);
-                case "pencil_corner":
-                    return new PMToolpathPencilCornerFinishing(powerMILL, name);
-                case "stitch_corner":
-                    return new PMToolpathStitchCornerFinishing(powerMILL, name);
-                case "automatic_corner":
-                    return new PMToolpathCornerFinishing(powerMILL, name);
-                case "along_corner":
-                    return new PMToolpathAlongCornerFinishing(powerMILL, name);
-                case "multi_pencil_corner":
-                    return new PMToolpathMultiPencilCornerFinishing(powerMILL, name);
-                case "rotary":
-                    return new PMToolpathRotaryFinishing(powerMILL, name);
-                case "point_projection":
-                    return new PMToolpathPointProjectionFinishing(powerMILL, name);
-                case "line_projection":
-                    return new PMToolpathLineProjectionFinishing(powerMILL, name);
-                case "plane_projection":
-                    return new PMToolpathPlaneProjectionFinishing(powerMILL, name);
-                case "curve_projection":
-                    return new PMToolpathCurveProjectionFinishing(powerMILL, name);
-                case "profile":
-                    return new PMToolpathProfileFinishing(powerMILL, name);
-                case "opti_constz":
-                    return new PMToolpathOptimisedConstantZFinishing(powerMILL, name);
-                case "inter_constz":
-                    return new PMToolpathSteepAndShallowFinishing(powerMILL, name);
-                case "swarf":
-                    return new PMToolpathSwarfMachining(powerMILL, name);
-                case "surface_proj":
-                    return new PMToolpathSurfaceProjectionFinishing(powerMILL, name);
-                case "embedded":
-                    return new PMToolpathEmbeddedPatternFinishing(powerMILL, name);
-                case "raster_area_clear":
-                    return new PMToolpathRasterAreaClearance(powerMILL, name);
-                case "offset_area_clear":
-                    return new PMToolpathOffsetAreaClearance(powerMILL, name);
-                case "profile_area_clear":
-                    return new PMToolpathProfileAreaClearance(powerMILL, name);
-                case "drill":
-                    return new PMToolpathDrilling(powerMILL, name);
-                case "wireframe_swarf":
-                    return new PMToolpathWireframeSwarfMachining(powerMILL, name);
-                case "raster_flat":
-                    return new PMToolpathRasterFlatFinishing(powerMILL, name);
-                case "offset_flat":
-                    return new PMToolpathOffsetFlatFinishing(powerMILL, name);
-                case "plunge":
-                    return new PMToolpathPlungeMilling(powerMILL, name);
-                case "parametric_offset":
-                    return new PMToolpathParametricOffsetFinishing(powerMILL, name);
-                case "surface_machine":
-                    return new PMToolpathSurfaceFinishing(powerMILL, name);
-                case "port_area_clear":
-                    return new PMToolpathPortAreaClearance(powerMILL, name);
-                case "port_plunge":
-                    return new PMToolpathPortPlungeFinishing(powerMILL, name);
-                case "port_spiral":
-                    return new PMToolpathPortSpiralFinishing(powerMILL, name);
-                case "method":
-                    return new PMToolpathMethod(powerMILL, name);
-                case "blisk":
-                    return new PMToolpathBliskAreaClearance(powerMILL, name);
-                case "blisk_hub":
-                    return new PMToolpathHubFinishing(powerMILL, name);
-                case "blisk_blade":
-                    return new PMToolpathBladeFinishing(powerMILL, name);
-                case "disc_profile":
-                    return new PMToolpathDiscProfileFinishing(powerMILL, name);
-                case "curve_profile":
-                    return new PMToolpathCurveProfile(powerMILL, name);
-                case "curve_area_clear":
-                    return new PMToolpathCurveAreaClearance(powerMILL, name);
-                case "face":
-                    return new PMToolpathFaceMilling(powerMILL, name);
-                case "chamfer":
-                    return new PMToolpathChamferMilling(powerMILL, name);
-                case "wireframe_profile":
-                    return new PMToolpathWireframeProfileMachining(powerMILL, name);
-                case "corner_clear":
-                    return new PMToolpathCornerClearance(powerMILL, name);
-                case "edge_break":
-                    return new PMToolpathEdgeBreak(powerMILL, name);
-                case "flowline":
-                    return new PMToolpathFlowlineFinishing(powerMILL, name);
-                case "parametric_spiral":
-                    return new PMToolpathParametricSpiralFinishing(powerMILL, name);
-                case "adaptive_area_clear":
-                    return new PMToolpathAdaptiveAreaClearance(powerMILL, name);
-                case "rib":
-                    return new PMToolpathRibMachining(powerMILL, name);
-                case "blade":
-                    return new PMToolpathBladeMachining(powerMILL, name);
-                case "feature_face":
-                    return new PMToolpathFeatureFaceMachining(powerMILL, name);
-                case "feature_chamfer":
-                    return new PMToolpathFeatureChamferMachining(powerMILL, name);
-                default:
-                    return new PMToolpath(powerMILL, name);
+        	return CreateEntity(powerMILL, new List<string>{name}).First();
+        }
+    	
+        /// <summary>
+        /// Creates a new toolpath based on its strategy.
+        /// </summary>
+        /// <param name="powerMILL">The base instance to interact with PowerMILL.</param>
+        /// <param name="names">The new instances names.</param>
+        /// <returns>The new tool instance</returns>
+        internal static List<PMToolpath> CreateEntity(PMAutomation powerMILL, List<string> names)
+        {
+        	List<PMToolpath> output = new List<PMToolpath>();
+        	
+        	List<Tuple<string,string>> extracted = ExtractFunction.ExtractStringValue("toolpath","strategy",powerMILL);
+        	
+            foreach (Tuple<string,string> element in extracted.Where(item => names.Contains(item.Item1))) {
+        		
+            	switch (element.Item2)
+	            {
+	                case "raster":
+            			output.Add( new PMToolpathRasterFinishing(powerMILL, element.Item1));
+            			break;
+	                case "radial":
+	                    output.Add( new PMToolpathRadialFinishing(powerMILL, element.Item1));
+            			break;
+	                case "spiral":
+	                    output.Add( new PMToolpathSpiralFinishing(powerMILL, element.Item1));
+            			break;
+	                case "pattern":
+	                    output.Add( new PMToolpathPatternFinishing(powerMILL, element.Item1));
+            			break;
+	                case "com_pattern":
+	                    output.Add( new PMToolpathCommittedPattern(powerMILL, element.Item1));
+            			break;
+	                case "com_boundary":
+	                    output.Add( new PMToolpathCommittedBoundary(powerMILL, element.Item1));
+            			break;
+	                case "constantz":
+	                    output.Add( new PMToolpathConstantZFinishing(powerMILL, element.Item1));
+            			break;
+	                case "offset_3d":
+	                    output.Add( new PMToolpath3DOffsetFinishing(powerMILL, element.Item1));
+            			break;
+	                case "pencil_corner":
+	                    output.Add( new PMToolpathPencilCornerFinishing(powerMILL, element.Item1));
+            			break;
+	                case "stitch_corner":
+	                    output.Add( new PMToolpathStitchCornerFinishing(powerMILL, element.Item1));
+            			break;
+	                case "automatic_corner":
+	                    output.Add( new PMToolpathCornerFinishing(powerMILL, element.Item1));
+            			break;
+	                case "along_corner":
+	                    output.Add( new PMToolpathAlongCornerFinishing(powerMILL, element.Item1));
+            			break;
+	                case "multi_pencil_corner":
+	                    output.Add( new PMToolpathMultiPencilCornerFinishing(powerMILL, element.Item1));
+            			break;
+	                case "rotary":
+	                    output.Add( new PMToolpathRotaryFinishing(powerMILL, element.Item1));
+            			break;
+	                case "point_projection":
+	                    output.Add( new PMToolpathPointProjectionFinishing(powerMILL, element.Item1));
+            			break;
+	                case "line_projection":
+	                    output.Add( new PMToolpathLineProjectionFinishing(powerMILL, element.Item1));
+            			break;
+	                case "plane_projection":
+	                    output.Add( new PMToolpathPlaneProjectionFinishing(powerMILL, element.Item1));
+            			break;
+	                case "curve_projection":
+	                    output.Add( new PMToolpathCurveProjectionFinishing(powerMILL, element.Item1));
+            			break;
+	                case "profile":
+	                    output.Add( new PMToolpathProfileFinishing(powerMILL, element.Item1));
+            			break;
+	                case "opti_constz":
+	                    output.Add( new PMToolpathOptimisedConstantZFinishing(powerMILL, element.Item1));
+            			break;
+	                case "inter_constz":
+	                    output.Add( new PMToolpathSteepAndShallowFinishing(powerMILL, element.Item1));
+            			break;
+	                case "swarf":
+	                    output.Add( new PMToolpathSwarfMachining(powerMILL, element.Item1));
+            			break;
+	                case "surface_proj":
+	                    output.Add( new PMToolpathSurfaceProjectionFinishing(powerMILL, element.Item1));
+            			break;
+	                case "embedded":
+	                    output.Add( new PMToolpathEmbeddedPatternFinishing(powerMILL, element.Item1));
+            			break;
+	                case "raster_area_clear":
+	                    output.Add( new PMToolpathRasterAreaClearance(powerMILL, element.Item1));
+            			break;
+	                case "offset_area_clear":
+	                    output.Add( new PMToolpathOffsetAreaClearance(powerMILL, element.Item1));
+            			break;
+	                case "profile_area_clear":
+	                    output.Add( new PMToolpathProfileAreaClearance(powerMILL, element.Item1));
+            			break;
+	                case "drill":
+	                    output.Add( new PMToolpathDrilling(powerMILL, element.Item1));
+            			break;
+	                case "wireframe_swarf":
+	                    output.Add( new PMToolpathWireframeSwarfMachining(powerMILL, element.Item1));
+            			break;
+	                case "raster_flat":
+	                    output.Add( new PMToolpathRasterFlatFinishing(powerMILL, element.Item1));
+            			break;
+	                case "offset_flat":
+	                    output.Add( new PMToolpathOffsetFlatFinishing(powerMILL, element.Item1));
+            			break;
+	                case "plunge":
+	                    output.Add( new PMToolpathPlungeMilling(powerMILL, element.Item1));
+            			break;
+	                case "parametric_offset":
+	                    output.Add( new PMToolpathParametricOffsetFinishing(powerMILL, element.Item1));
+            			break;
+	                case "surface_machine":
+	                    output.Add( new PMToolpathSurfaceFinishing(powerMILL, element.Item1));
+            			break;
+	                case "port_area_clear":
+	                    output.Add( new PMToolpathPortAreaClearance(powerMILL, element.Item1));
+            			break;
+	                case "port_plunge":
+	                    output.Add( new PMToolpathPortPlungeFinishing(powerMILL, element.Item1));
+            			break;
+	                case "port_spiral":
+	                    output.Add( new PMToolpathPortSpiralFinishing(powerMILL, element.Item1));
+            			break;
+	                case "method":
+	                    output.Add( new PMToolpathMethod(powerMILL, element.Item1));
+            			break;
+	                case "blisk":
+	                    output.Add( new PMToolpathBliskAreaClearance(powerMILL, element.Item1));
+            			break;
+	                case "blisk_hub":
+	                    output.Add( new PMToolpathHubFinishing(powerMILL, element.Item1));
+            			break;
+	                case "blisk_blade":
+	                    output.Add( new PMToolpathBladeFinishing(powerMILL, element.Item1));
+            			break;
+	                case "disc_profile":
+	                    output.Add( new PMToolpathDiscProfileFinishing(powerMILL, element.Item1));
+            			break;
+	                case "curve_profile":
+	                    output.Add( new PMToolpathCurveProfile(powerMILL, element.Item1));
+            			break;
+	                case "curve_area_clear":
+	                    output.Add( new PMToolpathCurveAreaClearance(powerMILL, element.Item1));
+            			break;
+	                case "face":
+	                    output.Add( new PMToolpathFaceMilling(powerMILL, element.Item1));
+            			break;
+	                case "chamfer":
+	                    output.Add( new PMToolpathChamferMilling(powerMILL, element.Item1));
+            			break;
+	                case "wireframe_profile":
+	                    output.Add( new PMToolpathWireframeProfileMachining(powerMILL, element.Item1));
+            			break;
+	                case "corner_clear":
+	                    output.Add( new PMToolpathCornerClearance(powerMILL, element.Item1));
+            			break;
+	                case "edge_break":
+	                    output.Add( new PMToolpathEdgeBreak(powerMILL, element.Item1));
+            			break;
+	                case "flowline":
+	                    output.Add( new PMToolpathFlowlineFinishing(powerMILL, element.Item1));
+            			break;
+	                case "parametric_spiral":
+	                    output.Add( new PMToolpathParametricSpiralFinishing(powerMILL, element.Item1));
+            			break;
+	                case "adaptive_area_clear":
+	                    output.Add( new PMToolpathAdaptiveAreaClearance(powerMILL, element.Item1));
+            			break;
+	                case "rib":
+	                    output.Add( new PMToolpathRibMachining(powerMILL, element.Item1));
+            			break;
+	                case "blade":
+	                    output.Add( new PMToolpathBladeMachining(powerMILL, element.Item1));
+            			break;
+	                case "feature_face":
+	                    output.Add( new PMToolpathFeatureFaceMachining(powerMILL, element.Item1));
+            			break;
+	                case "feature_chamfer":
+	                    output.Add( new PMToolpathFeatureChamferMachining(powerMILL, element.Item1));
+            			break;
+	                default:
+	                    output.Add( new PMToolpath(powerMILL, element.Item1));
+            			break;
+	            }
             }
+        	
+        	return output;
         }
     }
 }

@@ -28,59 +28,99 @@ namespace Autodesk.ProductInterface.PowerMILL
         {
             _toolpath = toolpath;
 
-            LeadIn = new PMLead(LeadTypes.LeadIn, _toolpath);
-            LeadInSecond = new PMLead(LeadTypes.LeadInSecond, _toolpath);
-            LeadOut = new PMLead(LeadTypes.LeadOut, _toolpath);
-            LeadOutSecond = new PMLead(LeadTypes.LeadOutSecond, _toolpath);
-            FirstLeadIn = new PMLead(LeadTypes.FirstLeadIn, _toolpath);
-            LastLeadOut = new PMLead(LeadTypes.LastLeadOut, _toolpath);
-            LeadInExtension = new PMLeadExtension(LeadTypes.LeadInExtension, _toolpath);
-            LeadOutExtension = new PMLeadExtension(LeadTypes.LeadOutExtension, _toolpath);
+            leadIn = new PMLead(LeadTypes.LeadIn, _toolpath);
+            leadInSecond = new PMLead(LeadTypes.LeadInSecond, _toolpath);
+            leadOut = new PMLead(LeadTypes.LeadOut, _toolpath);
+            leadOutSecond = new PMLead(LeadTypes.LeadOutSecond, _toolpath);
+            firstLeadIn = new PMLead(LeadTypes.FirstLeadIn, _toolpath);
+            lastLeadOut = new PMLead(LeadTypes.LastLeadOut, _toolpath);
+            leadInExtension = new PMLeadExtension(LeadTypes.LeadInExtension, _toolpath);
+            leadOutExtension = new PMLeadExtension(LeadTypes.LeadOutExtension, _toolpath);
         }
 
-        /// <summary>
-        /// Lead in first choice, Settings to control the tool's movement as it approaches the stock,
-        /// before beginning a cutting move.
-        /// </summary>
-        public PMLead LeadIn { get; }
+		readonly PMLead leadIn;
+		/// <summary>
+		/// Lead in first choice, Settings to control the tool's movement as it approaches the stock,
+		/// before beginning a cutting move.
+		/// </summary>
+		public PMLead LeadIn {
+			get {
+				return leadIn;
+			}
+		}
 
-        /// <summary>
-        /// Lead in second choice, Settings to control the tool's movement as it approaches the stock,
-        /// before beginning a cutting move.
-        /// </summary>
-        public PMLead LeadInSecond { get; }
+		readonly PMLead leadInSecond;
+		/// <summary>
+		/// Lead in second choice, Settings to control the tool's movement as it approaches the stock,
+		/// before beginning a cutting move.
+		/// </summary>
+		public PMLead LeadInSecond {
+			get {
+				return leadInSecond;
+			}
+		}
 
-        /// <summary>
-        /// Lead out first choice, Settings to control the tool's movement after it leaves the stock,
-        /// at the end of a cutting move.
-        /// </summary>
-        public PMLead LeadOut { get; }
+		readonly PMLead leadOut;
+		/// <summary>
+		/// Lead out first choice, Settings to control the tool's movement after it leaves the stock,
+		/// at the end of a cutting move.
+		/// </summary>
+		public PMLead LeadOut {
+			get {
+				return leadOut;
+			}
+		}
 
-        /// <summary>
-        /// Lead out second choice, Settings to control the tool's movement after it leaves the stock,
-        /// at the end of a cutting move.
-        /// </summary>
-        public PMLead LeadOutSecond { get; }
+		readonly PMLead leadOutSecond;
+		/// <summary>
+		/// Lead out second choice, Settings to control the tool's movement after it leaves the stock,
+		/// at the end of a cutting move.
+		/// </summary>
+		public PMLead LeadOutSecond {
+			get {
+				return leadOutSecond;
+			}
+		}
 
-        /// <summary>
-        /// Settings to specify a First Lead In move that is different from the subsequent lead in moves.
-        /// </summary>
-        public PMLead FirstLeadIn { get; }
+		readonly PMLead firstLeadIn;
+		/// <summary>
+		/// Settings to specify a First Lead In move that is different from the subsequent lead in moves.
+		/// </summary>
+		public PMLead FirstLeadIn {
+			get {
+				return firstLeadIn;
+			}
+		}
 
-        /// <summary>
-        /// Settings to specify a Last Lead Out move that is different from the previous lead out moves.
-        /// </summary>
-        public PMLead LastLeadOut { get; }
+		readonly PMLead lastLeadOut;
+		/// <summary>
+		/// Settings to specify a Last Lead Out move that is different from the previous lead out moves.
+		/// </summary>
+		public PMLead LastLeadOut {
+			get {
+				return lastLeadOut;
+			}
+		}
 
-        /// <summary>
-        /// These options add an additional Lead In before the existing one.
-        /// </summary>
-        public PMLeadExtension LeadInExtension { get; }
+		readonly PMLeadExtension leadInExtension;
+		/// <summary>
+		/// These options add an additional Lead In before the existing one.
+		/// </summary>
+		public PMLeadExtension LeadInExtension {
+			get {
+				return leadInExtension;
+			}
+		}
 
-        /// <summary>
-        /// These options add an additional Lead Out after the existing one.
-        /// </summary>
-        public PMLeadExtension LeadOutExtension { get; }
+		readonly PMLeadExtension leadOutExtension;
+		/// <summary>
+		/// These options add an additional Lead Out after the existing one.
+		/// </summary>
+		public PMLeadExtension LeadOutExtension {
+			get {
+				return leadOutExtension;
+			}
+		}
 
         /// <summary>
         /// Enter the distance by which a Lead in or Lead out can overlap a closed toolpath segment.

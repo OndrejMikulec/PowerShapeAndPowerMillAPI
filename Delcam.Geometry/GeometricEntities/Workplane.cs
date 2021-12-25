@@ -345,9 +345,9 @@ namespace Autodesk.Geometry
             // The 3rd column is the new z vector relative to World
             // The 4th column is the new origin position relative to World
 
-            string firstTranformationMatrixLine = $"{XAxis.I}|{YAxis.I}|{ZAxis.I}|{Origin.X}";
-            string secondTranformationMatrixLine = $"{XAxis.J}|{YAxis.J}|{ZAxis.J}|{Origin.Y}";
-            string thirdTranformationMatrixLine = $"{XAxis.K}|{YAxis.K}|{ZAxis.K}|{Origin.Z}";
+            string firstTranformationMatrixLine = string.Format("{0}|{1}|{2}|{3}",XAxis.I,YAxis.I,ZAxis.I,Origin.X);
+            string secondTranformationMatrixLine =  string.Format("{0}|{1}|{2}|{3}",XAxis.J,YAxis.J,ZAxis.J,Origin.Y);
+            string thirdTranformationMatrixLine =  string.Format("{0}|{1}|{2}|{3}",XAxis.K,YAxis.K,ZAxis.K,Origin.Z);
             string fourthTranformationMatrixLine = "0|0|0|1";
 
             var lines = new List<string>(6);
@@ -536,7 +536,7 @@ namespace Autodesk.Geometry
             if (rows.Count() != NUMBER_OF_ROWS_IN_TRANSFORMATION_MATRIX)
             {
                 throw new ArgumentException(
-                    $"Failed to load 'matrix' file. The file should have {NUMBER_OF_ROWS_IN_TRANSFORMATION_MATRIX} lines. The first line should be xAxis.i|yAxis.i|zAxis.i|x. The second line should be xAxis.j|yAxis.j|zAxis.j|y. The third line should be xAxis.k|yAxis.k|zAxis.k|z");
+            		string.Format("Failed to load 'matrix' file. The file should have {0} lines. The first line should be xAxis.i|yAxis.i|zAxis.i|x. The second line should be xAxis.j|yAxis.j|zAxis.j|y. The third line should be xAxis.k|yAxis.k|zAxis.k|z",NUMBER_OF_ROWS_IN_TRANSFORMATION_MATRIX));
             }
 
             double[,] rotationMatrix = new double[NUMBER_OF_ROWS_IN_ROTATION_MATRIX, NUMBER_OF_COLUMNS_IN_ROTATION_MATRIX];
@@ -560,7 +560,7 @@ namespace Autodesk.Geometry
                 if (rowItems.Count() != NUMBER_OF_COLUMNS_IN_TRANSFORMATION_MATRIX)
                 {
                     throw new ArgumentException(
-                        $"Failed to load 'matrix' file. The file should have per line {NUMBER_OF_COLUMNS_IN_TRANSFORMATION_MATRIX} numeric values separated by '|'.");
+                		string.Format("Failed to load 'matrix' file. The file should have per line {0} numeric values separated by '|'.",NUMBER_OF_COLUMNS_IN_TRANSFORMATION_MATRIX));
                 }
 
                 for (int c = 0; c < NUMBER_OF_COLUMNS_IN_TRANSFORMATION_MATRIX; c++)
@@ -581,7 +581,7 @@ namespace Autodesk.Geometry
                     }
                     catch (Exception ex)
                     {
-                        throw new ArgumentException($"Invalid MATRIX file. No numeric value found in : {rowItems[c]}", ex);
+                    	throw new ArgumentException( string.Format("Invalid MATRIX file. No numeric value found in : {0}",rowItems[c]), ex);
                     }
                 }
             }

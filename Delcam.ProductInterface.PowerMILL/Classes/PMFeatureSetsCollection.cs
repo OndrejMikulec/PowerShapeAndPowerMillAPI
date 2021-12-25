@@ -48,12 +48,7 @@ namespace Autodesk.ProductInterface.PowerMILL
         /// <returns>The list of the names of all the FeatureSets in PowerMILL.</returns>
         internal List<string> ReadFeatureSets()
         {
-            List<string> names = new List<string>();
-            foreach (var featureSet in _powerMILL.PowerMILLProject.FeatureSets)
-            {
-                names.Add(featureSet.Name);
-            }
-            return names;
+            return ExtractFunction.ReadFeatureSets(_powerMILL);
         }
 
         /// <summary>

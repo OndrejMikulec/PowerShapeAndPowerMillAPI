@@ -542,33 +542,15 @@ namespace Autodesk.ProductInterface.PowerMILL
             }
             if (type == null || ReferenceEquals(type, typeof(PMToolpath)))
             {
-                foreach (string name in _toolpaths.ReadToolpaths())
-                {
-                    if (_toolpaths[name] == null)
-                    {
-                        createdItemsList.Add(PMToolpathEntityFactory.CreateEntity(_powerMILL, name));
-                    }
-                }
+                createdItemsList.AddRange(PMToolEntityFactory.CreateEntity(_powerMILL, _toolpaths.ReadToolpaths().Where(item => _toolpaths[item] == null).ToList()));
             }
             if (type == null || ReferenceEquals(type, typeof(PMTool)))
             {
-                foreach (string name in _tools.ReadTools())
-                {
-                    if (_tools[name] == null)
-                    {
-                        createdItemsList.Add(PMToolEntityFactory.CreateEntity(_powerMILL, name));
-                    }
-                }
+            	createdItemsList.AddRange(PMToolEntityFactory.CreateEntity(_powerMILL, _tools.ReadTools().Where(item => _tools[item] == null).ToList()));
             }
             if (type == null || ReferenceEquals(type, typeof(PMBoundary)))
             {
-                foreach (string name in _boundaries.ReadBoundaries())
-                {
-                    if (_boundaries[name] == null)
-                    {
-                        createdItemsList.Add(PMBoundaryEntityFactory.CreateEntity(_powerMILL, name));
-                    }
-                }
+                createdItemsList.AddRange(PMBoundaryEntityFactory.CreateEntity(_powerMILL, _boundaries.ReadBoundaries().Where(item => _boundaries[item] == null).ToList()));
             }
             if (type == null || ReferenceEquals(type, typeof(PMPattern)))
             {

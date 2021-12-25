@@ -48,12 +48,7 @@ namespace Autodesk.ProductInterface.PowerMILL
         /// <returns>The list of the names of all the Levels and sets in PowerMILL.</returns>
         internal List<string> ReadLevelsAndSets()
         {
-            List<string> names = new List<string>();
-            foreach (var level in _powerMILL.PowerMILLProject.Levels)
-            {
-                names.Add(level.Name);
-            }
-            return names;
+            return ExtractFunction.ReadLevelOrSets(_powerMILL);
         }
 
         /// <summary>

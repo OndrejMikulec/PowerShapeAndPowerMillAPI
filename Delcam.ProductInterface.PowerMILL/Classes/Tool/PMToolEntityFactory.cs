@@ -7,6 +7,10 @@
 // *  in either electronic or hard copy form.                           *
 // **********************************************************************
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Autodesk.ProductInterface.PowerMILL
 {
     /// <summary>
@@ -14,7 +18,7 @@ namespace Autodesk.ProductInterface.PowerMILL
     /// </summary>
     internal class PMToolEntityFactory
     {
-        /// <summary>
+    	/// <summary>
         /// Creates a new tool based on its type.
         /// </summary>
         /// <param name="powerMILL">The base instance to interact with PowerMILL.</param>
@@ -22,44 +26,80 @@ namespace Autodesk.ProductInterface.PowerMILL
         /// <returns>The new tool instance</returns>
         internal static PMTool CreateEntity(PMAutomation powerMILL, string name)
         {
-            var result = powerMILL.DoCommandEx("PRINT PAR terse \"entity('tool', '" + name + "').type\"").ToString().Trim();
-            switch (result)
-            {
-                case "end_mill":
-                    return new PMToolEndMill(powerMILL, name);
-                case "ball_nosed":
-                    return new PMToolBallNosed(powerMILL, name);
-                case "tip_radiused":
-                    return new PMToolTipRadiused(powerMILL, name);
-                case "taper_spherical":
-                    return new PMToolTaperedSpherical(powerMILL, name);
-                case "taper_tipped":
-                    return new PMToolTaperedTipped(powerMILL, name);
-                case "drill":
-                    return new PMToolDrill(powerMILL, name);
-                case "tipped_disc":
-                    return new PMToolTippedDisc(powerMILL, name);
-                case "off_centre_tip_rad":
-                    return new PMToolOffCentreTipRadiused(powerMILL, name);
-                case "tap":
-                    return new PMToolTap(powerMILL, name);
-                case "thread_mill":
-                    return new PMToolThreadMill(powerMILL, name);
-                case "form":
-                    return new PMToolForm(powerMILL, name);
-                case "routing":
-                    return new PMToolRouting(powerMILL, name);
-                case "barrel":
-                    return new PMToolBarrel(powerMILL, name);
-                case "dovetail":
-                    return new PMToolDovetail(powerMILL, name);
-                case "turn_profiling":
-                    return new PMToolProfilingTurning(powerMILL, name);
-                case "turn_grooving":
-                    return new PMToolGroovingTurning(powerMILL, name);
-                default:
-                    return new PMTool(powerMILL, name);
+        	return CreateEntity(powerMILL, new List<string>{name}).First();
+        }
+    	
+        /// <summary>
+        /// Creates a new tool based on its type.
+        /// </summary>
+        /// <param name="powerMILL">The base instance to interact with PowerMILL.</param>
+        /// <param name="names">The new instances names.</param>
+        /// <returns>The new tool instance</returns>
+        internal static List<PMTool> CreateEntity(PMAutomation powerMILL, List<string> names)
+        {
+        	List<PMTool> output = new List<PMTool>();
+        	
+            List<Tuple<string,string>> extracted = ExtractFunction.ExtractStringValue("tool","type",powerMILL);
+            
+            foreach (Tuple<string,string> element in extracted.Where(item => names.Contains(item.Item1))) {
+                     	
+            	switch (element.Item2)
+	            {
+	                case "end_mill":
+            			output.Add( new PMToolEndMill(powerMILL, element.Item1));
+            			break;
+	                case "ball_nosed":
+            			output.Add( new PMToolBallNosed(powerMILL, element.Item1));
+            			break;
+	                case "tip_radiused":
+            			output.Add( new PMToolTipRadiused(powerMILL, element.Item1));
+            			break;
+	                case "taper_spherical":
+            			output.Add( new PMToolTaperedSpherical(powerMILL, element.Item1));
+            			break;
+	                case "taper_tipped":
+            			output.Add( new PMToolTaperedTipped(powerMILL, element.Item1));
+            			break;
+	                case "drill":
+            			output.Add( new PMToolDrill(powerMILL, element.Item1));
+            			break;
+	                case "tipped_disc":
+            			output.Add( new PMToolTippedDisc(powerMILL, element.Item1));
+            			break;
+	                case "off_centre_tip_rad":
+            			output.Add( new PMToolOffCentreTipRadiused(powerMILL, element.Item1));
+            			break;
+	                case "tap":
+	                      output.Add( new PMToolTap(powerMILL, element.Item1));
+	                      break;
+	                case "thread_mill":
+	                      output.Add( new PMToolThreadMill(powerMILL, element.Item1));
+	                      break;
+	                case "form":
+	                    output.Add( new PMToolForm(powerMILL, element.Item1));
+	                    break;
+	                case "routing":
+	                    output.Add( new PMToolRouting(powerMILL, element.Item1));
+	                    break;
+	                case "barrel":
+	                    output.Add( new PMToolBarrel(powerMILL, element.Item1));
+	                    break;
+	                case "dovetail":
+	                    output.Add( new PMToolDovetail(powerMILL, element.Item1));
+	                    break;
+	                case "turn_profiling":
+	                    output.Add( new PMToolProfilingTurning(powerMILL, element.Item1));
+	                    break;
+	                case "turn_grooving":
+	                    output.Add( new PMToolGroovingTurning(powerMILL, element.Item1));
+	                    break;
+	                default:
+	                    output.Add( new PMTool(powerMILL, element.Item1));
+	                    break;
+	            }
             }
+            
+            return output;
         }
     }
 }

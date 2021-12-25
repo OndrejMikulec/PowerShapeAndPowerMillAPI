@@ -79,6 +79,16 @@ namespace Autodesk.ProductInterface.PowerMILL
         {
             _list.Add(item);
         }
+        
+        /// <summary>
+        /// Adds a new item to the List.
+        /// </summary>
+        /// <param name="items">The items to add.</param>
+        /// <remarks></remarks>
+        public virtual void AddRange(IEnumerable<T> items)
+        {
+            _list.AddRange(items);
+        }
 
         /// <summary>
         /// Removes all entities in the list.

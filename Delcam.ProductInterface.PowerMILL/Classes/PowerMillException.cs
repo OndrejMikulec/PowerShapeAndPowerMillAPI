@@ -13,13 +13,23 @@ namespace Autodesk.ProductInterface.PowerMILL
 {
     public class PowerMillException : Exception
     {
-        private string _reason { get; }
-        private Version _version { get; }
+		readonly string _reason2;
+		private string _reason {
+			get {
+				return _reason2;
+			}
+		}
+		readonly Version _version2;
+		private Version _version {
+			get {
+				return _version2;
+			}
+		}
 
         public PowerMillException(Version version, string message)
         {
-            _version = version;
-            _reason = message;
+            _version2 = version;
+            _reason2 = message;
         }
 
         public override string Message

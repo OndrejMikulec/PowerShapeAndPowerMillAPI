@@ -256,7 +256,7 @@ namespace Autodesk.ProductInterface.PowerMILL
                     }
                     else
                     {
-                        command = "$$$NothingToDo$$$";
+                        command = "$$$NothingToDo$$ string.Format(";
                     }
                     _localIndex += 1;
                     _totalIndex += 1;

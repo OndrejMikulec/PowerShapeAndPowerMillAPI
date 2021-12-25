@@ -42,10 +42,8 @@ namespace Autodesk.ProductInterface.PowerMILL
         /// </summary>
         internal void Initialise()
         {
-            foreach (string name in ReadBoundaries())
-            {
-                Add(PMBoundaryEntityFactory.CreateEntity(_powerMILL, name));
-            }
+            AddRange(PMBoundaryEntityFactory.CreateEntity(_powerMILL, ReadBoundaries()));
+
         }
 
         /// <summary>
@@ -53,12 +51,7 @@ namespace Autodesk.ProductInterface.PowerMILL
         /// </summary>
         internal List<string> ReadBoundaries()
         {
-            List<string> names = new List<string>();
-            foreach (var boundary in _powerMILL.PowerMILLProject.Boundaries)
-            {
-                names.Add(boundary.Name);
-            }
-            return names;
+            return ExtractFunction.ReadBoundaries(_powerMILL);
         }
 
         /// <summary>

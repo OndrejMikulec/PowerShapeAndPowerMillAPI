@@ -47,12 +47,7 @@ namespace Autodesk.ProductInterface.PowerMILL
         /// </summary>
         internal List<string> ReadStockModels()
         {
-            List<string> names = new List<string>();
-            foreach (var stockModel in _powerMILL.PowerMILLProject.StockModels)
-            {
-                names.Add(stockModel.Name);
-            }
-            return names;
+            return ExtractFunction.ReadStockModels(_powerMILL);
         }
 
         /// <summary>

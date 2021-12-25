@@ -8,6 +8,8 @@
 // **********************************************************************
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Autodesk.ProductInterface.PowerMILL
 {
@@ -16,7 +18,7 @@ namespace Autodesk.ProductInterface.PowerMILL
     /// </summary>
     internal class PMBoundaryEntityFactory
     {
-        /// <summary>
+    	/// <summary>
         /// Creates a new boundary based on its type.
         /// </summary>
         /// <param name="powerMILL">The base instance to interact with PowerMILL.</param>
@@ -25,34 +27,65 @@ namespace Autodesk.ProductInterface.PowerMILL
         /// <remarks></remarks>
         internal static PMBoundary CreateEntity(PMAutomation powerMILL, string name)
         {
-            switch (
-                powerMILL.DoCommandEx("PRINT PAR TERSE \"entity('boundary', '" + name + "').type\"").ToString().Trim())
-            {
-                case "block":
-                    return new PMBoundaryBlock(powerMILL, name);
-                case "rest":
-                    return new PMBoundaryRest(powerMILL, name);
-                case "selected":
-                    return new PMBoundarySelectedSurface(powerMILL, name);
-                case "shallow":
-                    return new PMBoundaryShallow(powerMILL, name);
-                case "silhouette":
-                    return new PMBoundarySilhouette(powerMILL, name);
-                case "collision":
-                    return new PMBoundaryCollisionSafe(powerMILL, name);
-                case "stockmodel_rest":
-                    return new PMBoundaryStockModelRest(powerMILL, name);
-                case "contact_point":
-                    return new PMBoundaryContactPoint(powerMILL, name);
-                case "contact_conv":
-                    return new PMBoundaryContactConversion(powerMILL, name);
-                case "boolean_operation":
-                    return new PMBoundaryBooleanOperation(powerMILL, name);
-                case "user":
-                    return new PMBoundaryUserDefined(powerMILL, name);
-                default:
-                    throw new Exception("Failed to determine boundary type");
+        	return CreateEntity(powerMILL, new List<string>{name}).First();
+        }
+    	
+        /// <summary>
+        /// Creates a new boundary based on its type.
+        /// </summary>
+        /// <param name="powerMILL">The base instance to interact with PowerMILL.</param>
+        /// <param name="names">The names for the boundary entity.</param>
+        /// <returns>The created boundary.</returns>
+        /// <remarks></remarks>
+        internal static List<PMBoundary> CreateEntity(PMAutomation powerMILL, List<string> names)
+        {
+        	List<PMBoundary> output = new List<PMBoundary>();
+        	
+        	List<Tuple<string,string>> extracted = ExtractFunction.ExtractStringValue("boundary","type",powerMILL);
+        	
+        	foreach (Tuple<string,string> element in extracted.Where(item => names.Contains(item.Item1))) {
+        		
+            	switch (element.Item2)
+	            {
+	                case "block":
+            			output.Add( new PMBoundaryBlock(powerMILL, element.Item1));
+            			break;
+	                case "rest":
+	                    output.Add( new PMBoundaryRest(powerMILL, element.Item1));
+            			break;
+	                case "selected":
+	                    output.Add( new PMBoundarySelectedSurface(powerMILL, element.Item1));
+            			break;
+	                case "shallow":
+	                    output.Add( new PMBoundaryShallow(powerMILL, element.Item1));
+            			break;
+	                case "silhouette":
+	                    output.Add( new PMBoundarySilhouette(powerMILL, element.Item1));
+            			break;
+	                case "collision":
+	                    output.Add( new PMBoundaryCollisionSafe(powerMILL, element.Item1));
+            			break;
+	                case "stockmodel_rest":
+	                    output.Add( new PMBoundaryStockModelRest(powerMILL, element.Item1));
+            			break;
+	                case "contact_point":
+	                    output.Add( new PMBoundaryContactPoint(powerMILL, element.Item1));
+            			break;
+	                case "contact_conv":
+	                    output.Add( new PMBoundaryContactConversion(powerMILL, element.Item1));
+            			break;
+	                case "boolean_operation":
+	                    output.Add( new PMBoundaryBooleanOperation(powerMILL, element.Item1));
+            			break;
+	                case "user":
+	                    output.Add( new PMBoundaryUserDefined(powerMILL, element.Item1));
+            			break;
+	                default:
+	                    throw new Exception("Failed to determine boundary type");
+	            }
             }
+        	
+        	return output;
         }
     }
 }

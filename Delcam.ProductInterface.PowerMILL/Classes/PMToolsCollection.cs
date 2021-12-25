@@ -37,10 +37,7 @@ namespace Autodesk.ProductInterface.PowerMILL
         /// </summary>
         internal void Initialise()
         {
-            foreach (string name in ReadTools())
-            {
-                Add(PMToolEntityFactory.CreateEntity(_powerMILL, name));
-            }
+            AddRange(PMToolEntityFactory.CreateEntity(_powerMILL, ReadTools()));
         }
 
         /// <summary>
@@ -48,12 +45,7 @@ namespace Autodesk.ProductInterface.PowerMILL
         /// </summary>
         internal List<string> ReadTools()
         {
-            List<string> names = new List<string>();
-            foreach (var tool in _powerMILL.PowerMILLProject.Tools)
-            {
-                names.Add(tool.Name);
-            }
-            return names;
+            return ExtractFunction.ReadTools(_powerMILL);
         }
 
         /// <summary>

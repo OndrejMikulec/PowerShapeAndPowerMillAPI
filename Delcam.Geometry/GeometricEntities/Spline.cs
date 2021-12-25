@@ -1368,7 +1368,7 @@ namespace Autodesk.Geometry
 
             if (t > 1 || t < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(t), "t must be in range from 0 to 1.");
+                throw new ArgumentOutOfRangeException("t", "t must be in range from 0 to 1.");
             }
 
             Point a = new Point();

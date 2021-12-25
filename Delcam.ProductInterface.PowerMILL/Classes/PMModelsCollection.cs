@@ -50,12 +50,7 @@ namespace Autodesk.ProductInterface.PowerMILL
         /// </summary>
         internal List<string> ReadModels()
         {
-            List<string> names = new List<string>();
-            foreach (var model in _powerMILL.PowerMILLProject.Models)
-            {
-                names.Add(model.Name);
-            }
-            return names;
+            return ExtractFunction.ReadModels(_powerMILL);
         }
 
         /// <summary>
@@ -235,7 +230,7 @@ namespace Autodesk.ProductInterface.PowerMILL
         {
             if (Count > 0)
             {
-                _powerMILL.DoCommand($"EXPORT MODEL ALL FILESAVE \"{exportFile}\" YES");
+            	_powerMILL.DoCommand( string.Format("EXPORT MODEL ALL FILESAVE \"{exportFile}\" YES"));
 
                 // Wait until PowerMill stops being busy before continuing
                 while (_powerMILL.IsBusy)
