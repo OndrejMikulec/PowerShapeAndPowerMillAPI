@@ -1,3 +1,5 @@
+Forked from Autodesk/PowerShapeAndPowerMillAPI. The solution file (CustomSoftwareCore.sln) was cleaned to have only PowerMill automation and code demoted to work with SharpDevelop. This fork is using PowerMill function extrac() to significantly improve the APIs reading speed.
+
 ![Banner](Banner.png)
 
 # PowerShape and PowerMill API
