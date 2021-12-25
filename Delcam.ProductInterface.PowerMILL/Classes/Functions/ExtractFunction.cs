@@ -21,7 +21,7 @@ namespace Autodesk.ProductInterface.PowerMILL
 		
 		public static List<string> ReadNCPrograms(PMAutomation powerMILL)
 		{
-			return GetEntityListCorrectSort("NCPrograms",powerMILL);
+			return GetEntityListCorrectSort("NCProgram",powerMILL);
 		}
 		public static List<string> ReadBoundaries(PMAutomation powerMILL)
 		{
