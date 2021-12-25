@@ -542,7 +542,7 @@ namespace Autodesk.ProductInterface.PowerMILL
             }
             if (type == null || ReferenceEquals(type, typeof(PMToolpath)))
             {
-                createdItemsList.AddRange(PMToolEntityFactory.CreateEntity(_powerMILL, _toolpaths.ReadToolpaths().Where(item => _toolpaths[item] == null).ToList()));
+                createdItemsList.AddRange(PMToolpathEntityFactory.CreateEntity(_powerMILL, _toolpaths.ReadToolpaths().Where(item => _toolpaths[item] == null).ToList()));
             }
             if (type == null || ReferenceEquals(type, typeof(PMTool)))
             {
