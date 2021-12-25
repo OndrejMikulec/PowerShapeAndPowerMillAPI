@@ -27,6 +27,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest.PMEntityTests
             _powerMill = new PMAutomation(InstanceReuse.UseExistingInstance);
             _powerMill.DialogsOff();
             _powerMill.CloseProject();
+            SetUp();
         }
 
         [OneTimeTearDown]
@@ -34,7 +35,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest.PMEntityTests
         {
         }
 
-        [SetUp]
+        
         public void SetUp()
         {
             _powerMill.CloseProject();
