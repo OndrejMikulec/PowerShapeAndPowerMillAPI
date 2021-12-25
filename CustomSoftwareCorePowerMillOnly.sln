@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+# SharpDevelop 5.1
+VisualStudioVersion = 15.0.27004.2009
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0100D04D-AF83-45F4-BE06-2FCCFA1FAC66}"
+	ProjectSection(SolutionItems) = preProject
+		delcam.snk = delcam.snk
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delcam.Utilities", "Delcam.Utilities\Delcam.Utilities.csproj", "{1E2EC09F-D066-4ED3-86F1-8C22E01DE694}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delcam.ProductInterface.PowerMILL", "Delcam.ProductInterface.PowerMILL\Delcam.ProductInterface.PowerMILL.csproj", "{4F447014-2790-46B3-80B3-F26E37E1CE9B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delcam.Geometry", "Delcam.Geometry\Delcam.Geometry.csproj", "{A0D60FF2-DCB9-462F-ADCD-28E2A126ECC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delcam.ProductInterface", "Delcam.ProductInterface\Delcam.ProductInterface.csproj", "{DD0B1C05-2E13-4671-B24C-D0A071E2A521}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPowerMillTEST", "MyPowerMillTEST\MyPowerMillTEST.csproj", "{B90DDC42-D208-427F-BCF2-4E20B3A3F326}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1E2EC09F-D066-4ED3-86F1-8C22E01DE694}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E2EC09F-D066-4ED3-86F1-8C22E01DE694}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E2EC09F-D066-4ED3-86F1-8C22E01DE694}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E2EC09F-D066-4ED3-86F1-8C22E01DE694}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F447014-2790-46B3-80B3-F26E37E1CE9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F447014-2790-46B3-80B3-F26E37E1CE9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F447014-2790-46B3-80B3-F26E37E1CE9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F447014-2790-46B3-80B3-F26E37E1CE9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0D60FF2-DCB9-462F-ADCD-28E2A126ECC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0D60FF2-DCB9-462F-ADCD-28E2A126ECC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0D60FF2-DCB9-462F-ADCD-28E2A126ECC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0D60FF2-DCB9-462F-ADCD-28E2A126ECC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD0B1C05-2E13-4671-B24C-D0A071E2A521}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD0B1C05-2E13-4671-B24C-D0A071E2A521}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD0B1C05-2E13-4671-B24C-D0A071E2A521}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD0B1C05-2E13-4671-B24C-D0A071E2A521}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B90DDC42-D208-427F-BCF2-4E20B3A3F326}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B90DDC42-D208-427F-BCF2-4E20B3A3F326}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B90DDC42-D208-427F-BCF2-4E20B3A3F326}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B90DDC42-D208-427F-BCF2-4E20B3A3F326}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {605A232E-B141-4E28-BBD2-4F63F8F6088B}
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = CustomSoftwareCore.vsmdi
+	EndGlobalSection
+EndGlobal
