@@ -2,6 +2,7 @@
 - Forked from Autodesk/PowerShapeAndPowerMillAPI. 
 - The solution file (CustomSoftwareCore.sln) was cleaned to have only PowerMill automation (CustomSoftwareCorePowerMillOnly.sln) and code demoted to work with SharpDevelop. 
 - The UnitTest framework and tests code updated and successfully run with SharpDevelop.
+- Unit tests should be running without any additional setups after cloning and using SharpDevelop
 
 ![Banner](Banner.png)
 
