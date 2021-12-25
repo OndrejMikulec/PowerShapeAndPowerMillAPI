@@ -1,4 +1,7 @@
-Forked from Autodesk/PowerShapeAndPowerMillAPI. The solution file (CustomSoftwareCore.sln) was cleaned to have only PowerMill automation (CustomSoftwareCorePowerMillOnly.sln) and code demoted to work with SharpDevelop. This fork is using PowerMill function extrac() to significantly improve the APIs reading speed.
+# This fork is using PowerMill function extract() to significantly improve the APIs reading speed.
+- Forked from Autodesk/PowerShapeAndPowerMillAPI. 
+- The solution file (CustomSoftwareCore.sln) was cleaned to have only PowerMill automation (CustomSoftwareCorePowerMillOnly.sln) and code demoted to work with SharpDevelop. 
+- The UnitTest framework and tests code updated and successfully run with SharpDevelop.
 
 ![Banner](Banner.png)
 
