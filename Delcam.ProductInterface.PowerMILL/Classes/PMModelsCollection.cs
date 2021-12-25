@@ -230,7 +230,7 @@ namespace Autodesk.ProductInterface.PowerMILL
         {
             if (Count > 0)
             {
-            	_powerMILL.DoCommand( string.Format("EXPORT MODEL ALL FILESAVE \"{exportFile}\" YES"));
+            	_powerMILL.DoCommand( string.Format("EXPORT MODEL ALL FILESAVE \"{0}\" YES",exportFile));
 
                 // Wait until PowerMill stops being busy before continuing
                 while (_powerMILL.IsBusy)
