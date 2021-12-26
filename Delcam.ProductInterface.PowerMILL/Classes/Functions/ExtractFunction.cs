@@ -106,7 +106,13 @@ namespace Autodesk.ProductInterface.PowerMILL
  			return output;
 
 		}
-		
+		/// <summary>
+		/// Extracts a double values from a collection. Fast method
+		/// </summary>
+		/// <param name="entityTypeOrFolder">Entity type or PowerMill explorer folder</param>
+		/// <param name="valueName">Desired value name</param>
+		/// <param name="powerMILL">The base instance to interact with PowerMILL</param>
+		/// <returns>Item1: entity name, Item2: desired value</returns>
 		public static List<Tuple<string,double>> ExtractDoubleValue(string entityTypeOrFolder, string valueName, PMAutomation powerMILL)
 		{
 			
@@ -148,7 +154,13 @@ namespace Autodesk.ProductInterface.PowerMILL
 			return output;
 		
 		}
-		
+		/// <summary>
+		/// Extracts a int values from a collection. Fast method
+		/// </summary>
+		/// <param name="entityTypeOrFolder">Entity type or PowerMill explorer folder</param>
+		/// <param name="valueName">Desired value name</param>
+		/// <param name="powerMILL">The base instance to interact with PowerMILL</param>
+		/// <returns>Item1: entity name, Item2: desired value</returns>
 		public static List<Tuple<string,int>> ExtractIntValue(string entityTypeOrFolder, string valueName, PMAutomation powerMILL)
 		{
 			
@@ -186,7 +198,13 @@ namespace Autodesk.ProductInterface.PowerMILL
 			return output;
 		
 		}
-		
+		/// <summary>
+		/// Extracts a bool values from a collection. Fast method
+		/// </summary>
+		/// <param name="entityTypeOrFolder">Entity type or PowerMill explorer folder</param>
+		/// <param name="valueName">Desired value name</param>
+		/// <param name="powerMILL">The base instance to interact with PowerMILL</param>
+		/// <returns>Item1: entity name, Item2: desired value</returns>
 		public static List<Tuple<string,bool>> ExtractBoolValue(string entityTypeOrFolder, string valueName, PMAutomation powerMILL)
 		{
 			
@@ -226,10 +244,10 @@ namespace Autodesk.ProductInterface.PowerMILL
 		}
 		
 		/// <summary>
-		/// 
+		/// Extracts a string values from a collection. Fast method
 		/// </summary>
-		/// <param name="entityTypeOrFolder"></param>
-		/// <param name="valueName"></param>
+		/// <param name="entityTypeOrFolder">Entity type or PowerMill explorer folder</param>
+		/// <param name="valueName">Desired value name</param>
 		/// <param name="powerMILL">The base instance to interact with PowerMILL</param>
 		/// <returns>Item1: entity name, Item2: desired value</returns>
 		public static List<Tuple<string,string>> ExtractStringValue(string entityTypeOrFolder, string valueName, PMAutomation powerMILL)
