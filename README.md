@@ -1,8 +1,16 @@
 # This fork is using PowerMill function extract() to significantly improve the APIs reading speed.
 - Forked from Autodesk/PowerShapeAndPowerMillAPI. 
-- The solution file (CustomSoftwareCore.sln) was cleaned to have only PowerMill automation (CustomSoftwareCorePowerMillOnly.sln) and code demoted to work with SharpDevelop. 
-- The UnitTest framework and tests code updated and successfully run with SharpDevelop.
-- Unit tests should be running without any additional setups after cloning and using SharpDevelop
+- PowerMill only -> use CustomSoftwareCorePowerMillOnly.sln only.
+- The original CustomSoftwareCore.sln and all files are still in this repository.
+- Modified to work with SharpDevelop IDE.
+- Unit testing updated to NUnit.3.13.2 linked with projects and included  into repository UnitTest/NUnit.3.13.2
+- The UnitTest framework and tests code updated and successfully run with SharpDevelop (CustomSoftwareCorePowerMillOnly.sln only).
+- Unit tests should be running without any additional setups after cloning this repository and using SharpDevelop IDE (CustomSoftwareCorePowerMillOnly.sln only).
+- Reverting to use VisuaStudio IDE and the original CustomSoftwareCore.sln for any other sub forks is possible. 
+
+---------------------------------------------------------------------------------
+
+
 
 ![Banner](Banner.png)
 
