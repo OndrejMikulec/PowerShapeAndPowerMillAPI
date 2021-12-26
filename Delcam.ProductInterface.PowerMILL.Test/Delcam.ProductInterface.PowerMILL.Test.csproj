@@ -101,6 +101,7 @@
     </Compile>
     <Compile Include="PMEntityTests\PMToolTest.cs" />
     <Compile Include="PMEntityTests\PMWorkplaneTests.cs" />
+    <Compile Include="PMFunctionsTests\ExtractFunctionTests.cs" />
     <Compile Include="PMToolTipRadiusedTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PMEntityTests\PMEntityTestBase.cs" />
@@ -485,6 +486,9 @@
       <Project>{1e2ec09f-d066-4ed3-86f1-8c22e01de694}</Project>
       <Name>Delcam.Utilities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="PMFunctionsTests" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
