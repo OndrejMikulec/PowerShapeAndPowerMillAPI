@@ -8,6 +8,8 @@
 // **********************************************************************
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Autodesk.ProductInterface.PowerMILL;
 using Autodesk.ProductInterface.PowerMILLTest.Files;
 using NUnit.Framework;
@@ -555,6 +557,35 @@ namespace Autodesk.ProductInterface.PowerMILLTest.CollectionTests
 
             //Delete the entity
             _powerMILL.ActiveProject.Toolpaths.Remove(toolpath);
+        }
+        
+        [Test]
+        public void IsCalculated()
+        {
+//        	bool alpha = true;
+//        	bool brava = true;
+//        	bool delta = false;
+//        	bool charlie = true;
+        	
+        	_powerMILL.LoadProject(TestFiles.SimplePmProject1);
+        	
+			List<Tuple<PMToolpath,bool>> isCalculated = _powerMILL.ActiveProject.Toolpaths.IsCalculated;
+			
+			Assert.IsNotNull( isCalculated.FirstOrDefault(item => item.Item1.Name == "alpha"));
+			Assert.IsNotNull( isCalculated.FirstOrDefault(item => item.Item1.Name == "brava"));
+			Assert.IsNotNull( isCalculated.FirstOrDefault(item => item.Item1.Name == "delta"));
+			Assert.IsNotNull( isCalculated.FirstOrDefault(item => item.Item1.Name == "charlie"));
+			
+			foreach (Tuple<PMToolpath,bool> element in isCalculated) {
+				if (element.Item1.Name == "delta") {
+					Assert.AreEqual(element.Item2, false);
+				} else {
+					Assert.AreEqual(element.Item2, true);
+				}
+			}
+        	
+            
+            
         }
     }
 }

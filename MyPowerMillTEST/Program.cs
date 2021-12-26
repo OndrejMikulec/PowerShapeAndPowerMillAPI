@@ -23,7 +23,7 @@ namespace MyPowerMillTEST
 			PMAutomation app = new PMAutomation(pms.FirstOrDefault());
 			
 			if (app != null) {
-				foreach (PMToolpath element in app.ActiveProject.NCPrograms) {
+				foreach (PMNCProgram element in app.ActiveProject.NCPrograms) {
 					Console.WriteLine(element.Name);
 				}
 				foreach (PMBoundary element in app.ActiveProject.Boundaries) {
@@ -65,6 +65,14 @@ namespace MyPowerMillTEST
 				foreach (PMWorkplane element in app.ActiveProject.Workplanes) {
 					Console.WriteLine(element.Name);
 				}
+				
+				
+				
+				foreach (Tuple<PMToolpath,bool> element in app.ActiveProject.Toolpaths.IsCalculated) {
+					Console.WriteLine(element.Item2);
+				}
+				
+				
 			}
 			
 			Console.Write("Press any key to continue . . . ");
