@@ -108,6 +108,7 @@ namespace Autodesk.ProductInterface.PowerMILL
 		}
 		/// <summary>
 		/// Extracts a double values from a collection. Fast method
+		/// A tuple with not implemented variable will be ommited from the list completely!
 		/// </summary>
 		/// <param name="entityTypeOrFolder">Entity type or PowerMill explorer folder</param>
 		/// <param name="valueName">Desired value name</param>
@@ -156,6 +157,7 @@ namespace Autodesk.ProductInterface.PowerMILL
 		}
 		/// <summary>
 		/// Extracts a int values from a collection. Fast method
+		/// A tuple with not implemented variable will be ommited from the list completely!
 		/// </summary>
 		/// <param name="entityTypeOrFolder">Entity type or PowerMill explorer folder</param>
 		/// <param name="valueName">Desired value name</param>
@@ -200,6 +202,7 @@ namespace Autodesk.ProductInterface.PowerMILL
 		}
 		/// <summary>
 		/// Extracts a bool values from a collection. Fast method
+		/// A tuple with not implemented variable will be ommited from the list completely!
 		/// </summary>
 		/// <param name="entityTypeOrFolder">Entity type or PowerMill explorer folder</param>
 		/// <param name="valueName">Desired value name</param>
@@ -245,6 +248,7 @@ namespace Autodesk.ProductInterface.PowerMILL
 		
 		/// <summary>
 		/// Extracts a string values from a collection. Fast method
+		/// A tuple with not implemented variable will be ommited from the list completely!
 		/// </summary>
 		/// <param name="entityTypeOrFolder">Entity type or PowerMill explorer folder</param>
 		/// <param name="valueName">Desired value name</param>

@@ -228,6 +228,14 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         }
         
         [Test]
+        public void ExtractIntNotImplemetedValue()
+        {
+        	_powerMill.Execute("IMPORT TEMPLATE ENTITY TOOLPATH FILEOPEN \"Finishing/Raster-Finishing.002.ptf\"");
+
+			CollectionAssert.IsEmpty(ExtractFunction.ExtractBoolValue("Toolpath","Tool.Number.Value",_powerMill).Select(item => item.Item2));
+        }
+        
+        [Test]
         public void ExtractBoolValue()
         {
         	List<string> expectedNames = new List<string>{"1","2","3","4","5"};
@@ -240,6 +248,14 @@ namespace Autodesk.ProductInterface.PowerMILLTest
              
         	CollectionAssert.AreEqual(expectedNames, ExtractFunction.ReadTools(_powerMill));
 			CollectionAssert.AreEqual(expected, ExtractFunction.ExtractBoolValue("Tool","IDTracksName",_powerMill).Select(item => item.Item2));
+        }
+        
+        [Test]
+        public void ExtractBoolNotImplemetedValue()
+        {
+        	_powerMill.Execute("IMPORT TEMPLATE ENTITY TOOLPATH FILEOPEN \"Finishing/Raster-Finishing.002.ptf\"");
+
+			CollectionAssert.IsEmpty(ExtractFunction.ExtractBoolValue("Toolpath","Tool.IDTracksName",_powerMill).Select(item => item.Item2));
         }
         
         [Test]
@@ -257,6 +273,14 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         }
         
         [Test]
+        public void ExtractStringNotImplemetedValue()
+        {
+        	_powerMill.Execute("IMPORT TEMPLATE ENTITY TOOLPATH FILEOPEN \"Finishing/Raster-Finishing.002.ptf\"");
+
+			CollectionAssert.IsEmpty(ExtractFunction.ExtractStringValue("Toolpath","Tool.Name",_powerMill).Select(item => item.Item2));
+        }
+        
+        [Test]
         public void ExtractDoubleValue()
         {
         	List<string> expectedNames = new List<string>{"1","2","3","4","5"};
@@ -269,6 +293,40 @@ namespace Autodesk.ProductInterface.PowerMILLTest
              
         	CollectionAssert.AreEqual(expectedNames, ExtractFunction.ReadTools(_powerMill));
 			CollectionAssert.AreEqual(expected, ExtractFunction.ExtractDoubleValue("Tool","Length",_powerMill).Select(item => item.Item2));
+        }
+        
+        [Test]
+        public void ExtractDoubleNotImplemetedValue()
+        {
+        	_powerMill.Execute("IMPORT TEMPLATE ENTITY TOOLPATH FILEOPEN \"Finishing/Raster-Finishing.002.ptf\"");
+
+			CollectionAssert.IsEmpty(ExtractFunction.ExtractDoubleValue("Toolpath","Tool.Diameter",_powerMill).Select(item => item.Item2));
+        }
+        
+        [Test]
+        public void ExtractFromAnMegaHugeProject()
+        {
+        	const int number = 500;
+        	//PowerMill console output is cutting the results after [437] line. This test is asserting whether the API is returning full list.
+        	
+        	_powerMill.Execute("IMPORT TEMPLATE ENTITY TOOLPATH FILEOPEN \"Finishing/Raster-Finishing.002.ptf\"");
+        	_powerMill.Execute("RENAME TOOLPATH # 0");
+        	
+        	for (int i = 1; i < number; i++) {
+        		_powerMill.Execute("COPY TOOLPATH #");
+        		_powerMill.Execute("RENAME TOOLPATH # "+i);
+        	}
+        	
+        	for (int i = 0; i < number; i++) {
+        		_powerMill.Execute("CREATE TOOL "+i);
+        	}
+        	
+        	for (int i = 0; i < number; i++) {
+        		_powerMill.Execute("$entity('Toolpath','"+i+"').Tool = "+i);
+        	}
+        	
+        	CollectionAssert.AreEqual(Enumerable.Range(0,number).Select(item => item.ToString()), ExtractFunction.ReadToolpaths(_powerMill));
+			CollectionAssert.AreEqual(Enumerable.Range(0,number).Select(item => item.ToString()), ExtractFunction.ExtractStringValue("Toolpath","Tool.Name",_powerMill).Select(item => item.Item2));
         }
         
         #endregion
