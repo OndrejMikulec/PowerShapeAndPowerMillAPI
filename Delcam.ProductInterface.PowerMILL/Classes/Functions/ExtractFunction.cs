@@ -107,6 +107,48 @@ namespace Autodesk.ProductInterface.PowerMILL
 
 		}
 		
+		public static List<Tuple<string,double>> ExtractDoubleValue(string entityTypeOrFolder, string valueName, PMAutomation powerMILL)
+		{
+			
+			List<Tuple<string,double>> output = new List<Tuple<string,double>>();
+			
+
+			string result = powerMILL.DoCommandEx("print par \"extract(  folder('"+entityTypeOrFolder+"'), 'name')\"").ToString();
+ 			
+ 			string[] resultArray = result.Split( new string[]{Environment.NewLine},StringSplitOptions.RemoveEmptyEntries);	
+
+ 			if (resultArray == null || resultArray.Length < 1) {
+ 				return new List<Tuple<string,double>>();
+ 			} 			
+			
+ 			List<Tuple<int,string>> outputNames = extracted(resultArray,"STRING");
+ 			
+ 			result = powerMILL.DoCommandEx("print par \"extract(folder('"+entityTypeOrFolder+"'), '"+valueName+"')\"").ToString();
+ 			
+ 			resultArray = result.Split( new string[]{Environment.NewLine},StringSplitOptions.RemoveEmptyEntries);	
+			
+ 			List<Tuple<int,string>> outputDoubleValue = extracted(resultArray,"REAL");
+
+ 			
+ 			foreach (Tuple<int,string> element in outputNames) {
+ 				string outputValueName = element.Item2;
+ 				
+ 				if (outputDoubleValue.Count(item => item.Item1 == element.Item1) > 0) {
+ 					double parsed = double.MaxValue;
+					string doubleStr = outputDoubleValue.First(item => item.Item1 == element.Item1).Item2;
+					if (doubleStr.Length > 4 && doubleStr.Substring(doubleStr.Length-4) == " [L]") {
+						doubleStr = doubleStr.Substring(0,doubleStr.Length-4);
+					}
+ 					if (double.TryParse(doubleStr, out parsed)) {
+ 						output.Add(new Tuple<string, double>(outputValueName,parsed));
+ 					}
+ 				}
+ 			}
+	
+			return output;
+		
+		}
+		
 		public static List<Tuple<string,int>> ExtractIntValue(string entityTypeOrFolder, string valueName, PMAutomation powerMILL)
 		{
 			
