@@ -59,6 +59,8 @@ namespace Autodesk.ProductInterface.PowerMILLTest.Files
         public static Directory ToolPathStrategies = FetchDirectory("ToolpathStrategies");
         public static Directory BoundaryTypes = FetchDirectory("BoundaryTypes");
         public static Directory BasicToolpath = FetchDirectory("BasicToolpath");
+        
+        public static File MegaPmProjectZip = new File(FetchTestFile("MegaProject1.zip"));
 
         private static string SetSolutionFolder()
         {

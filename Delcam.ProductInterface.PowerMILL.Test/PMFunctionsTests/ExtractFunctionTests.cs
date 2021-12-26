@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Autodesk.FileSystem;
 using Autodesk.Geometry;
 using Autodesk.ProductInterface.PowerMILL;
 using Autodesk.ProductInterface.PowerMILLTest.Files;
@@ -19,6 +20,8 @@ namespace Autodesk.ProductInterface.PowerMILLTest
 	[TestFixture]
 	public class ExtractFunctionTests
 	{
+		private Directory temp;
+
         private PMAutomation _powerMill;
         private double TOLERANCE = 0.00001;
 
@@ -36,8 +39,15 @@ namespace Autodesk.ProductInterface.PowerMILLTest
             try
             {
                 _powerMill.CloseProject();
+                
+                if (temp != null && temp.Exists) {
+                	try {
+            			temp.Delete();
+                	} catch  {
+                	}
+                }
             }
-            catch (Exception)
+            catch 
             {
             }
         }
@@ -303,30 +313,17 @@ namespace Autodesk.ProductInterface.PowerMILLTest
 			CollectionAssert.IsEmpty(ExtractFunction.ExtractDoubleValue("Toolpath","Tool.Diameter",_powerMill).Select(item => item.Item2));
         }
         
-        [Test]
+        [Test,Explicit]
         public void ExtractFromAnMegaHugeProject()
         {
-        	const int number = 500;
         	//PowerMill console output is cutting the results after [437] line. This test is asserting whether the API is returning full list.
-        	
-        	_powerMill.Execute("IMPORT TEMPLATE ENTITY TOOLPATH FILEOPEN \"Finishing/Raster-Finishing.002.ptf\"");
-        	_powerMill.Execute("RENAME TOOLPATH # 0");
-        	
-        	for (int i = 1; i < number; i++) {
-        		_powerMill.Execute("COPY TOOLPATH #");
-        		_powerMill.Execute("RENAME TOOLPATH # "+i);
-        	}
-        	
-        	for (int i = 0; i < number; i++) {
-        		_powerMill.Execute("CREATE TOOL "+i);
-        	}
-        	
-        	for (int i = 0; i < number; i++) {
-        		_powerMill.Execute("$entity('Toolpath','"+i+"').Tool = "+i);
-        	}
-        	
-        	CollectionAssert.AreEqual(Enumerable.Range(0,number).Select(item => item.ToString()), ExtractFunction.ReadToolpaths(_powerMill));
-			CollectionAssert.AreEqual(Enumerable.Range(0,number).Select(item => item.ToString()), ExtractFunction.ExtractStringValue("Toolpath","Tool.Name",_powerMill).Select(item => item.Item2));
+
+			temp = Directory.CreateTemporaryDirectory(false);
+    		System.IO.Compression.ZipFile.ExtractToDirectory(TestFiles.MegaPmProjectZip.Path,temp.Path);
+    		_powerMill.LoadProject(temp.Directories.First());
+        		
+        	CollectionAssert.AreEqual(Enumerable.Range(0,500).Select(item => item.ToString()), ExtractFunction.ReadToolpaths(_powerMill));
+			CollectionAssert.AreEqual(Enumerable.Range(0,500).Select(item => item.ToString()), ExtractFunction.ExtractStringValue("Toolpath","Tool.Name",_powerMill).Select(item => item.Item2));
         }
         
         #endregion

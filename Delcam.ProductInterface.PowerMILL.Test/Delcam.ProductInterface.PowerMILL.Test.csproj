@@ -62,6 +62,8 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
@@ -431,6 +433,7 @@
     <None Include="Files\PMfiles\PM2013_Projects\ToolProperties\x0efffa7052f23a8400001eaf00000000.pmlent" />
     <None Include="Files\PMfiles\PM2013_Projects\ToolProperties\x0f00035052f23a8d000021f900000000.pmlent" />
     <None Include="Files\PMfiles\PM2013_Projects\ToolProperties\x0f0f51c053732969000010e100000000.pmlent" />
+    <None Include="Files\PMfiles\PM_Projects\MegaProject1.zip" />
     <None Include="Files\PMfiles\PTFFiles\ImportPTFTest.ptf" />
     <None Include="Files\PMfiles\SetupsProject\active_entity.pmldat" />
     <None Include="Files\PMfiles\SetupsProject\Default_Thickness.pmldat" />
@@ -488,6 +491,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Files\PMfiles\PM_Projects" />
     <Folder Include="PMFunctionsTests" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
