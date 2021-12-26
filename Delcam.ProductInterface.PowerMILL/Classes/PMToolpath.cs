@@ -460,7 +460,7 @@ namespace Autodesk.ProductInterface.PowerMILL
                                               segmentNumber + ")}").ToString());
             }
             throw new IndexOutOfRangeException(
-            	string.Format("{segmentNumber} is greater than the {numberOfSegments} segments in this toolpath."));
+            	string.Format("{0} is greater than the {1} segments in this toolpath.",segmentNumber,numberOfSegments));
         }
 
         public MM SegmentLength(int segmentNumber)
@@ -474,7 +474,7 @@ namespace Autodesk.ProductInterface.PowerMILL
                                               segmentNumber + ")}").ToString());
             }
             throw new IndexOutOfRangeException(
-            	string.Format("{segmentNumber} is greater than the {numberOfSegments} segments in this toolpath."));
+            	string.Format("{0} is greater than the {1} segments in this toolpath.",segmentNumber,numberOfSegments));
         }
 
         /// <summary>
@@ -500,7 +500,7 @@ namespace Autodesk.ProductInterface.PowerMILL
                 return new Point(x, y, z);
             }
             throw new IndexOutOfRangeException(
-            	string.Format("{pointNumber} is greater than the {numberOfPoints} points in segment {segmentNumber} of this toolpath."));
+            	string.Format("{0} is greater than the {1} points in segment {2} of this toolpath.",pointNumber,numberOfPoints,segmentNumber));
         }
 
         /// <summary>
@@ -526,7 +526,7 @@ namespace Autodesk.ProductInterface.PowerMILL
                 return new Vector(i, j, k);
             }
             throw new IndexOutOfRangeException(
-            	string.Format("{pointNumber} is greater than the {numberOfPoints} points in segment {segmentNumber} of this toolpath."));
+            	string.Format("{0} is greater than the {1} points in segment {2} of this toolpath.",pointNumber,numberOfPoints,segmentNumber));
         }
 
         /// <summary>
@@ -555,7 +555,7 @@ namespace Autodesk.ProductInterface.PowerMILL
                 return new Vector(i, j, k);
             }
             throw new IndexOutOfRangeException(
-            	string.Format("{pointNumber} is greater than the {numberOfPoints} points in segment {segmentNumber} of this toolpath."));
+            	string.Format("{0} is greater than the {1} points in segment {2} of this toolpath.",pointNumber,numberOfPoints,segmentNumber));
         }
 
         /// <summary>
