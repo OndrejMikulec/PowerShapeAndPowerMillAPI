@@ -8,7 +8,10 @@
 // **********************************************************************
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Autodesk.ProductInterface.PowerMILL;
+using Autodesk.ProductInterface.PowerMILLTest.Files;
 using NUnit.Framework;
 
 namespace Autodesk.ProductInterface.PowerMILLTest.CollectionTests
@@ -163,6 +166,79 @@ namespace Autodesk.ProductInterface.PowerMILLTest.CollectionTests
 
             //Delete the entity
             _powerMILL.ActiveProject.Tools.Remove(tool);
+        }
+        
+                [Test]
+        public void ExtractBool()
+        {
+        	
+        	_powerMILL.LoadProject(TestFiles.SimplePmProject1);
+        	
+        	List<Tuple<PMTool,bool>> extracted = _powerMILL.ActiveProject.Tools.ExtractBool("Number.UserDefined");
+			
+			Assert.IsNotNull( extracted.FirstOrDefault(item => item.Item1.Name == "12 ball"));
+			Assert.IsNotNull( extracted.FirstOrDefault(item => item.Item1.Name == "10+1.6 tiprad"));
+			
+			foreach (Tuple<PMTool,bool> element in extracted) {
+				if (element.Item1.Name == "12 ball") {
+					Assert.AreEqual(element.Item2, true);
+				} else {
+					Assert.AreEqual(element.Item2, false);
+				}
+			}
+			
+			List<PMTool> expected = new List<PMTool> {
+				_powerMILL.ActiveProject.Tools.First(item => item.Name == "12 ball")
+			};
+        	
+            List<PMTool> isCalculated2 = _powerMILL.ActiveProject.Tools.ExtractBool("Number.UserDefined",true);
+			
+			CollectionAssert.AreEqual(expected, isCalculated2);
+        }
+        
+        [Test]
+        public void ExtractDouble()
+        {
+        	
+        	_powerMILL.LoadProject(TestFiles.SimplePmProject1);
+        	
+        	List<Tuple<PMTool,double>> extracted = _powerMILL.ActiveProject.Tools.ExtractDouble("Diameter");
+			
+			Assert.IsNotNull( extracted.FirstOrDefault(item => item.Item1.Name == "12 ball"));
+			Assert.IsNotNull( extracted.FirstOrDefault(item => item.Item1.Name == "10+1.6 tiprad"));
+			
+			CollectionAssert.AreEqual(new List<double>{12.0,10.0},extracted.Select(item => item.Item2));
+
+        }
+        
+        [Test]
+        public void ExtractInt()
+        {
+        	
+        	_powerMILL.LoadProject(TestFiles.SimplePmProject1);
+
+        	List<Tuple<PMTool,int>> extracted = _powerMILL.ActiveProject.Tools.ExtractInt("Number.Value");
+			
+			Assert.IsNotNull( extracted.FirstOrDefault(item => item.Item1.Name == "12 ball"));
+			Assert.IsNotNull( extracted.FirstOrDefault(item => item.Item1.Name == "10+1.6 tiprad"));
+			
+			CollectionAssert.AreEqual(new List<int>{2,0},extracted.Select(item => item.Item2));
+
+        }
+        
+        [Test]
+        public void ExtractString()
+        {
+        	
+        	_powerMILL.LoadProject(TestFiles.SimplePmProject1);
+
+        	List<Tuple<PMTool,string>> extracted = _powerMILL.ActiveProject.Tools.ExtractString("Tool.Type");
+			
+			Assert.IsNotNull( extracted.FirstOrDefault(item => item.Item1.Name == "12 ball"));
+			Assert.IsNotNull( extracted.FirstOrDefault(item => item.Item1.Name == "10+1.6 tiprad"));
+			
+			CollectionAssert.AreEqual(new List<string>{"ball_nosed","tip_radiused"},extracted.Select(item => item.Item2));
+
         }
     }
 }
