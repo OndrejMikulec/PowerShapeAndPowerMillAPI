@@ -135,7 +135,7 @@ namespace Autodesk.ProductInterface.PowerMILL
  			resultArray = result.Split( new string[]{Environment.NewLine},StringSplitOptions.RemoveEmptyEntries);	
 			
  			List<Tuple<int,string>> outputDoubleValue = extracted(resultArray,"REAL");
-
+			outputDoubleValue.AddRange(extracted(resultArray,"ANGLE"));
  			
  			foreach (Tuple<int,string> element in outputNames) {
  				string outputValueName = element.Item2;

@@ -306,6 +306,19 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         }
         
         [Test]
+        public void ExtractDoubleValueAngle()
+        {
+        	List<string> expected = new List<string>{"1","2","3","4","5"};
+        	
+        	foreach (string element in expected) {
+        		_powerMill.Execute("CREATE Workplane "+element);
+        	}
+             
+        	CollectionAssert.AreEqual(expected, ExtractFunction.ReadWorkplanes(_powerMill));
+        	CollectionAssert.AreEqual(Enumerable.Repeat(90.0,5), ExtractFunction.ExtractDoubleValue("Workplane","Elevation",_powerMill).Select(item => item.Item2));
+        }
+        
+        [Test]
         public void ExtractDoubleNotImplemetedValue()
         {
         	_powerMill.Execute("IMPORT TEMPLATE ENTITY TOOLPATH FILEOPEN \"Finishing/Raster-Finishing.002.ptf\"");
