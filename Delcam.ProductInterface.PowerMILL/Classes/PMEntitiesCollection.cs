@@ -257,6 +257,83 @@ namespace Autodesk.ProductInterface.PowerMILL
         }
 
         #endregion
+        
+        public List<Tuple<T,bool>> ExtractBool(string parameterName)
+        {
+    		List<Tuple<T,bool>> output = new List<Tuple<T, bool>>();
+    		
+    		System.Reflection.FieldInfo[] fi = typeof(T).GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+            string identifier = fi[0].GetValue(null).ToString();
+    		
+    		IEnumerable<Tuple<string,bool>> extractedAndExistsInThisList = ExtractFunction.ExtractBoolValue(identifier,parameterName,_powerMILL).Where(item => this.Count(item2 => item2.Name == item.Item1) > 0);
+    		
+    		foreach (Tuple<string,bool> element in extractedAndExistsInThisList) {
+    			if (this[element.Item1] != null) {
+    				output.Add(new Tuple<T, bool>( this[element.Item1],element.Item2));
+    			}
+    		}
+    		
+    		return output;
+        }
+        
+        public List<T> ExtractBool(string parameterName,bool condition)
+        {
+        	return ExtractBool(parameterName).Where(item => item.Item2 == condition).Select(item => item.Item1).ToList();
+        }
+        
+        public List<Tuple<T,double>> ExtractDouble(string parameterName)
+        {
+    		List<Tuple<T,double>> output = new List<Tuple<T, double>>();
+    		
+    		System.Reflection.FieldInfo[] fi = typeof(T).GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+            string identifier = fi[0].GetValue(null).ToString();
+    		
+    		IEnumerable<Tuple<string,double>> extractedAndExistsInThisList = ExtractFunction.ExtractDoubleValue(identifier,parameterName,_powerMILL).Where(item => this.Count(item2 => item2.Name == item.Item1) > 0);
+    		
+    		foreach (Tuple<string,double> element in extractedAndExistsInThisList) {
+    			if (this[element.Item1] != null) {
+    				output.Add(new Tuple<T, double>( this[element.Item1],element.Item2));
+    			}
+    		}
+    		
+    		return output;
+        }
+        
+        public List<Tuple<T,int>> ExtractInt(string parameterName)
+        {
+    		List<Tuple<T,int>> output = new List<Tuple<T, int>>();
+    		
+    		System.Reflection.FieldInfo[] fi = typeof(T).GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+            string identifier = fi[0].GetValue(null).ToString();
+    		
+    		IEnumerable<Tuple<string,int>> extractedAndExistsInThisList = ExtractFunction.ExtractIntValue(identifier,parameterName,_powerMILL).Where(item => this.Count(item2 => item2.Name == item.Item1) > 0);
+    		
+    		foreach (Tuple<string,int> element in extractedAndExistsInThisList) {
+    			if (this[element.Item1] != null) {
+    				output.Add(new Tuple<T, int>( this[element.Item1],element.Item2));
+    			}
+    		}
+    		
+    		return output;
+        }
+        
+        public List<Tuple<T,string>> ExtractString(string parameterName)
+        {
+    		List<Tuple<T,string>> output = new List<Tuple<T, string>>();
+    		
+    		System.Reflection.FieldInfo[] fi = typeof(T).GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+            string identifier = fi[0].GetValue(null).ToString();
+    		
+    		IEnumerable<Tuple<string,string>> extractedAndExistsInThisList = ExtractFunction.ExtractStringValue(identifier,parameterName,_powerMILL).Where(item => this.Count(item2 => item2.Name == item.Item1) > 0);
+    		
+    		foreach (Tuple<string,string> element in extractedAndExistsInThisList) {
+    			if (this[element.Item1] != null) {
+    				output.Add(new Tuple<T, string>( this[element.Item1],element.Item2));
+    			}
+    		}
+    		
+    		return output;
+        }
     }
     
 }

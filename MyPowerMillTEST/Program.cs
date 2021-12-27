@@ -68,7 +68,7 @@ namespace MyPowerMillTEST
 				
 				
 				
-				foreach (Tuple<PMToolpath,bool> element in app.ActiveProject.Toolpaths.IsCalculated) {
+				foreach (Tuple<PMToolpath,bool> element in app.ActiveProject.Toolpaths.ExtractBool("Computed")) {
 					Console.WriteLine(element.Item2);
 				}
 				

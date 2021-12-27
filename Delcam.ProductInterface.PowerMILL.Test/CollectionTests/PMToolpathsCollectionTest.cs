@@ -560,7 +560,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest.CollectionTests
         }
         
         [Test]
-        public void IsCalculated()
+        public void ExtractBool()
         {
 //        	bool alpha = true;
 //        	bool brava = true;
@@ -569,7 +569,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest.CollectionTests
         	
         	_powerMILL.LoadProject(TestFiles.SimplePmProject1);
         	
-			List<Tuple<PMToolpath,bool>> isCalculated = _powerMILL.ActiveProject.Toolpaths.IsCalculated;
+        	List<Tuple<PMToolpath,bool>> isCalculated = _powerMILL.ActiveProject.Toolpaths.ExtractBool("Computed");
 			
 			Assert.IsNotNull( isCalculated.FirstOrDefault(item => item.Item1.Name == "alpha"));
 			Assert.IsNotNull( isCalculated.FirstOrDefault(item => item.Item1.Name == "brava"));
@@ -583,9 +583,70 @@ namespace Autodesk.ProductInterface.PowerMILLTest.CollectionTests
 					Assert.AreEqual(element.Item2, true);
 				}
 			}
+			
+			List<PMToolpath> expected = new List<PMToolpath> {
+				_powerMILL.ActiveProject.Toolpaths.First(item => item.Name == "alpha"),
+				_powerMILL.ActiveProject.Toolpaths.First(item => item.Name == "brava"),
+				_powerMILL.ActiveProject.Toolpaths.First(item => item.Name == "charlie"),
+			};
         	
-            
-            
+            List<PMToolpath> isCalculated2 = _powerMILL.ActiveProject.Toolpaths.ExtractBool("Computed",true);
+			
+			CollectionAssert.AreEqual(expected, isCalculated2);
+        }
+        
+        [Test]
+        public void ExtractDouble()
+        {
+        	
+        	_powerMILL.LoadProject(TestFiles.SimplePmProject1);
+        	
+        	_powerMILL.Execute("$entity('Toolpath','delta').Stepover = 0.3");
+
+        	
+        	List<Tuple<PMToolpath,double>> extracted = _powerMILL.ActiveProject.Toolpaths.ExtractDouble("Stepover");
+			
+			Assert.IsNotNull( extracted.FirstOrDefault(item => item.Item1.Name == "alpha"));
+			Assert.IsNotNull( extracted.FirstOrDefault(item => item.Item1.Name == "brava"));
+			Assert.IsNotNull( extracted.FirstOrDefault(item => item.Item1.Name == "delta"));
+			Assert.IsNotNull( extracted.FirstOrDefault(item => item.Item1.Name == "charlie"));
+			
+			CollectionAssert.AreEqual(new List<double>{1.0,1.0,0.3,1.0},extracted.Select(item => item.Item2));
+
+        }
+        
+        [Test]
+        public void ExtractInt()
+        {
+        	
+        	_powerMILL.LoadProject(TestFiles.SimplePmProject1);
+
+        	List<Tuple<PMToolpath,int>> extracted = _powerMILL.ActiveProject.Toolpaths.ExtractInt("Tool.number.Value");
+			
+			Assert.IsNotNull( extracted.FirstOrDefault(item => item.Item1.Name == "alpha"));
+			Assert.IsNotNull( extracted.FirstOrDefault(item => item.Item1.Name == "brava"));
+			Assert.IsNotNull( extracted.FirstOrDefault(item => item.Item1.Name == "delta"));
+			Assert.IsNotNull( extracted.FirstOrDefault(item => item.Item1.Name == "charlie"));
+			
+			CollectionAssert.AreEqual(new List<int>{2,2,2,0},extracted.Select(item => item.Item2));
+
+        }
+        
+        [Test]
+        public void ExtractString()
+        {
+        	
+        	_powerMILL.LoadProject(TestFiles.SimplePmProject1);
+
+        	List<Tuple<PMToolpath,string>> extracted = _powerMILL.ActiveProject.Toolpaths.ExtractString("Tool.Name");
+			
+			Assert.IsNotNull( extracted.FirstOrDefault(item => item.Item1.Name == "alpha"));
+			Assert.IsNotNull( extracted.FirstOrDefault(item => item.Item1.Name == "brava"));
+			Assert.IsNotNull( extracted.FirstOrDefault(item => item.Item1.Name == "delta"));
+			Assert.IsNotNull( extracted.FirstOrDefault(item => item.Item1.Name == "charlie"));
+			
+			CollectionAssert.AreEqual(new List<string>{"12 ball","12 ball","12 ball","10+1.6 tiprad"},extracted.Select(item => item.Item2));
+
         }
     }
 }

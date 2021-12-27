@@ -1094,26 +1094,5 @@ namespace Autodesk.ProductInterface.PowerMILL
             }
         }
         #endregion
-        
-        
-        /// <summary>
-        /// Gets whether or not all toolpath in this collection has been calculated.
-        /// </summary>
-        public List<Tuple<PMToolpath,bool>> IsCalculated
-        {
-            get {
-        		
-        		List<Tuple<PMToolpath,bool>> output = new List<Tuple<PMToolpath, bool>>();
-        		
-        		IEnumerable<Tuple<string,bool>> extractedAndExistsInThisList = ExtractFunction.ExtractBoolValue("Toolpath",Resources.IsCalculated,_powerMILL).Where(item => this.Count(item2 => item2.Name == item.Item1) > 0);
-        		
-        		foreach (Tuple<string,bool> element in extractedAndExistsInThisList) {
-        			output.Add(new Tuple<PMToolpath, bool>( this.First(item => item.Name == element.Item1),element.Item2));
-        		}
-        		
-        		return output;
-        	}
-        	
-        }
     }
 }
