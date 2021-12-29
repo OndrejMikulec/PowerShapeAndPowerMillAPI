@@ -24,6 +24,16 @@ foreach (Tuple<PMToolpath,bool> element in app.ActiveProject.Toolpaths.ExtractBo
 }
 ```
 ---------------------------------------------------------------------------------
+To get diameters from holes featuresets:
+```C#
+foreach (PMFeatureSet feat in app.ActiveProject.FeatureSets) {
+        Console.WriteLine(feat.Name);
+        foreach (Tuple<string,double> comp in ExtractFunction.ExtractDoubleValueFromComponets(feat,"Diameter",app)) {
+                Console.WriteLine(comp);
+        }
+}
+```
+---------------------------------------------------------------------------------
 
 ![Banner](Banner.png)
 
