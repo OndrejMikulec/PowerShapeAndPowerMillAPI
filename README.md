@@ -9,8 +9,21 @@
 - Reverting to use VisuaStudio IDE and the original CustomSoftwareCore.sln for any other sub forks is possible. 
 
 ---------------------------------------------------------------------------------
+To iterate through all elements there are two ways to do that:
 
-
+Example 1: -slower old way
+```C#
+foreach (PMToolpath element in app.ActiveProject.Toolpaths) {
+        Console.WriteLine(element.IsCalculated);
+}
+```
+Example 2: -faster new way
+```C#
+foreach (Tuple<PMToolpath,bool> element in app.ActiveProject.Toolpaths.ExtractBool("Computed")) {
+        Console.WriteLine(element.Item2);
+}
+```
+---------------------------------------------------------------------------------
 
 ![Banner](Banner.png)
 
