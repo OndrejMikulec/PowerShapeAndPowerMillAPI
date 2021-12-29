@@ -18,6 +18,7 @@ namespace Autodesk.ProductInterface.PowerMILL
 	/// </summary>
 	public static class ExtractFunction
 	{
+		private enum eExtractionType {FROM_FOLDER,FROM_ENTITY_COMPONENTS}
 		
 		public static List<string> ReadNCPrograms(PMAutomation powerMILL)
 		{
@@ -116,11 +117,42 @@ namespace Autodesk.ProductInterface.PowerMILL
 		/// <returns>Item1: entity name, Item2: desired value</returns>
 		public static List<Tuple<string,double>> ExtractDoubleValue(string entityTypeOrFolder, string valueName, PMAutomation powerMILL)
 		{
+			return ExtractDoubleValue(eExtractionType.FROM_FOLDER,valueName,entityTypeOrFolder,null,powerMILL);
+		}
+		
+		public static List<Tuple<string,double>> ExtractDoubleValueFromComponets(PMEntity entityWithComponents, string valueName, PMAutomation powerMILL)
+		{
+			return ExtractDoubleValue(eExtractionType.FROM_ENTITY_COMPONENTS,valueName,null,entityWithComponents,powerMILL);
+		}
+		
+		/// <summary>
+		/// Extracts a double values from a collection. Fast method
+		/// A tuple with not implemented variable will be ommited from the list completely!
+		/// </summary>
+		/// <param name="extractionType">From a entities folder OR from an entity components</param>
+		/// <param name="valueName">Desired value name</param>
+		/// <param name="entityTypeOrFolder">Entity type or PowerMill explorer folder - only for extraction from a folder</param>
+		/// <param name="entityWithComponents">Entity with components - only for extraction from a entity with components</param>
+		/// <param name="powerMILL">The base instance to interact with PowerMILL</param>
+		/// <returns>Item1: entity name, Item2: desired value</returns>
+		private static List<Tuple<string,double>> ExtractDoubleValue(eExtractionType extractionType, string valueName, string entityTypeOrFolder, PMEntity entityWithComponents, PMAutomation powerMILL)
+		{
 			
 			List<Tuple<string,double>> output = new List<Tuple<string,double>>();
 			
 
-			string result = powerMILL.DoCommandEx("print par \"extract(  folder('"+entityTypeOrFolder+"'), 'name')\"").ToString();
+			string result = null;
+			if (extractionType == eExtractionType.FROM_FOLDER ) {
+				
+				result = powerMILL.DoCommandEx("print par \"extract(  folder('"+entityTypeOrFolder+"'), 'name')\"").ToString();
+				
+			} else if (extractionType == eExtractionType.FROM_ENTITY_COMPONENTS) {
+				
+				result = powerMILL.DoCommandEx("print par \"extract(  components(entity('"+entityWithComponents.Identifier+"','"+entityWithComponents.Name+"')), 'name')\"").ToString();
+				
+			} else {
+				throw new Exception();
+			}
  			
  			string[] resultArray = result.Split( new string[]{Environment.NewLine},StringSplitOptions.RemoveEmptyEntries);	
 
@@ -130,7 +162,17 @@ namespace Autodesk.ProductInterface.PowerMILL
 			
  			List<Tuple<int,string>> outputNames = extracted(resultArray,"STRING");
  			
- 			result = powerMILL.DoCommandEx("print par \"extract(folder('"+entityTypeOrFolder+"'), '"+valueName+"')\"").ToString();
+			if (extractionType == eExtractionType.FROM_FOLDER ) {
+				
+				result = powerMILL.DoCommandEx("print par \"extract(folder('"+entityTypeOrFolder+"'), '"+valueName+"')\"").ToString();
+				
+			} else if (extractionType == eExtractionType.FROM_ENTITY_COMPONENTS) {
+				
+				result = powerMILL.DoCommandEx("print par \"extract(  components(entity('"+entityWithComponents.Identifier+"','"+entityWithComponents.Name+"')), '"+valueName+"')\"").ToString();
+				
+			} else {
+				throw new Exception();
+			}
  			
  			resultArray = result.Split( new string[]{Environment.NewLine},StringSplitOptions.RemoveEmptyEntries);	
 			
@@ -154,7 +196,7 @@ namespace Autodesk.ProductInterface.PowerMILL
 	
 			return output;
 		
-		}
+		}		
 		/// <summary>
 		/// Extracts a int values from a collection. Fast method
 		/// A tuple with not implemented variable will be ommited from the list completely!
@@ -165,11 +207,42 @@ namespace Autodesk.ProductInterface.PowerMILL
 		/// <returns>Item1: entity name, Item2: desired value</returns>
 		public static List<Tuple<string,int>> ExtractIntValue(string entityTypeOrFolder, string valueName, PMAutomation powerMILL)
 		{
+			return ExtractIntValue(eExtractionType.FROM_FOLDER,valueName,entityTypeOrFolder,null,powerMILL);
+		}
+		
+		public static List<Tuple<string,int>> ExtractIntValueFromComponets(PMEntity entityWithComponents, string valueName, PMAutomation powerMILL)
+		{
+			return ExtractIntValue(eExtractionType.FROM_ENTITY_COMPONENTS,valueName,null,entityWithComponents,powerMILL);
+		}
+		
+		/// <summary>
+		/// Extracts a int values from a collection. Fast method
+		/// A tuple with not implemented variable will be ommited from the list completely!
+		/// </summary>
+		/// <param name="extractionType">From a entities folder OR from an entity components</param>
+		/// <param name="valueName">Desired value name</param>
+		/// <param name="entityTypeOrFolder">Entity type or PowerMill explorer folder - only for extraction from a folder</param>
+		/// <param name="entityWithComponents">Entity with components - only for extraction from a entity with components</param>
+		/// <param name="powerMILL">The base instance to interact with PowerMILL</param>
+		/// <returns>Item1: entity name, Item2: desired value</returns>
+		private static List<Tuple<string,int>> ExtractIntValue(eExtractionType extractionType, string valueName, string entityTypeOrFolder, PMEntity entityWithComponents, PMAutomation powerMILL)
+		{
 			
 			List<Tuple<string,int>> output = new List<Tuple<string,int>>();
 			
 
-			string result = powerMILL.DoCommandEx("print par \"extract(  folder('"+entityTypeOrFolder+"'), 'name')\"").ToString();
+			string result = null;
+			if (extractionType == eExtractionType.FROM_FOLDER ) {
+				
+				result = powerMILL.DoCommandEx("print par \"extract(  folder('"+entityTypeOrFolder+"'), 'name')\"").ToString();
+				
+			} else if (extractionType == eExtractionType.FROM_ENTITY_COMPONENTS) {
+				
+				result = powerMILL.DoCommandEx("print par \"extract(  components(entity('"+entityWithComponents.Identifier+"','"+entityWithComponents.Name+"')), 'name')\"").ToString();
+				
+			} else {
+				throw new Exception();
+			}
  			
  			string[] resultArray = result.Split( new string[]{Environment.NewLine},StringSplitOptions.RemoveEmptyEntries);	
 
@@ -179,7 +252,17 @@ namespace Autodesk.ProductInterface.PowerMILL
 			
  			List<Tuple<int,string>> outputNames = extracted(resultArray,"STRING");
  			
- 			result = powerMILL.DoCommandEx("print par \"extract(folder('"+entityTypeOrFolder+"'), '"+valueName+"')\"").ToString();
+			if (extractionType == eExtractionType.FROM_FOLDER ) {
+				
+				result = powerMILL.DoCommandEx("print par \"extract(folder('"+entityTypeOrFolder+"'), '"+valueName+"')\"").ToString();
+				
+			} else if (extractionType == eExtractionType.FROM_ENTITY_COMPONENTS) {
+				
+				result = powerMILL.DoCommandEx("print par \"extract(  components(entity('"+entityWithComponents.Identifier+"','"+entityWithComponents.Name+"')), '"+valueName+"')\"").ToString();
+				
+			} else {
+				throw new Exception();
+			}
  			
  			resultArray = result.Split( new string[]{Environment.NewLine},StringSplitOptions.RemoveEmptyEntries);	
 			
@@ -210,11 +293,41 @@ namespace Autodesk.ProductInterface.PowerMILL
 		/// <returns>Item1: entity name, Item2: desired value</returns>
 		public static List<Tuple<string,bool>> ExtractBoolValue(string entityTypeOrFolder, string valueName, PMAutomation powerMILL)
 		{
+			return ExtractBoolValue(eExtractionType.FROM_FOLDER,valueName,entityTypeOrFolder,null,powerMILL);
+		}
+		
+		public static List<Tuple<string,bool>> ExtractBoolValueFromComponets(PMEntity entityWithComponents, string valueName, PMAutomation powerMILL)
+		{
+			return ExtractBoolValue(eExtractionType.FROM_ENTITY_COMPONENTS,valueName,null,entityWithComponents,powerMILL);
+		}
+		/// <summary>
+		/// Extracts a bool values from a collection. Fast method
+		/// A tuple with not implemented variable will be ommited from the list completely!
+		/// </summary>
+		/// <param name="extractionType">From a entities folder OR from an entity components</param>
+		/// <param name="valueName">Desired value name</param>
+		/// <param name="entityTypeOrFolder">Entity type or PowerMill explorer folder - only for extraction from a folder</param>
+		/// <param name="entityWithComponents">Entity with components - only for extraction from a entity with components</param>
+		/// <param name="powerMILL">The base instance to interact with PowerMILL</param>
+		/// <returns>Item1: entity name, Item2: desired value</returns>
+		private static List<Tuple<string,bool>> ExtractBoolValue(eExtractionType extractionType, string valueName, string entityTypeOrFolder, PMEntity entityWithComponents, PMAutomation powerMILL)
+		{
 			
 			List<Tuple<string,bool>> output = new List<Tuple<string,bool>>();
 			
 
-			string result = powerMILL.DoCommandEx("print par \"extract(  folder('"+entityTypeOrFolder+"'), 'name')\"").ToString();
+			string result = null;
+			if (extractionType == eExtractionType.FROM_FOLDER ) {
+				
+				result = powerMILL.DoCommandEx("print par \"extract(  folder('"+entityTypeOrFolder+"'), 'name')\"").ToString();
+				
+			} else if (extractionType == eExtractionType.FROM_ENTITY_COMPONENTS) {
+				
+				result = powerMILL.DoCommandEx("print par \"extract(  components(entity('"+entityWithComponents.Identifier+"','"+entityWithComponents.Name+"')), 'name')\"").ToString();
+				
+			} else {
+				throw new Exception();
+			}
  			
  			string[] resultArray = result.Split( new string[]{Environment.NewLine},StringSplitOptions.RemoveEmptyEntries);	
 
@@ -224,7 +337,17 @@ namespace Autodesk.ProductInterface.PowerMILL
 			
  			List<Tuple<int,string>> outputNames = extracted(resultArray,"STRING");
  			
- 			result = powerMILL.DoCommandEx("print par \"extract(folder('"+entityTypeOrFolder+"'), '"+valueName+"')\"").ToString();
+ 			if (extractionType == eExtractionType.FROM_FOLDER ) {
+				
+				result = powerMILL.DoCommandEx("print par \"extract(folder('"+entityTypeOrFolder+"'), '"+valueName+"')\"").ToString();
+				
+			} else if (extractionType == eExtractionType.FROM_ENTITY_COMPONENTS) {
+				
+				result = powerMILL.DoCommandEx("print par \"extract(  components(entity('"+entityWithComponents.Identifier+"','"+entityWithComponents.Name+"')), '"+valueName+"')\"").ToString();
+				
+			} else {
+				throw new Exception();
+			}
  			
  			resultArray = result.Split( new string[]{Environment.NewLine},StringSplitOptions.RemoveEmptyEntries);	
 			
@@ -256,11 +379,32 @@ namespace Autodesk.ProductInterface.PowerMILL
 		/// <returns>Item1: entity name, Item2: desired value</returns>
 		public static List<Tuple<string,string>> ExtractStringValue(string entityTypeOrFolder, string valueName, PMAutomation powerMILL)
 		{
+			return ExtractStringValue(eExtractionType.FROM_FOLDER,valueName,entityTypeOrFolder,null,powerMILL);
+		}
+		
+		public static List<Tuple<string,string>> ExtractStringValueFromComponets(PMEntity entityWithComponents, string valueName, PMAutomation powerMILL)
+		{
+			return ExtractStringValue(eExtractionType.FROM_ENTITY_COMPONENTS,valueName,null,entityWithComponents,powerMILL);
+		}
+		
+		private static List<Tuple<string,string>> ExtractStringValue(eExtractionType extractionType, string valueName, string entityTypeOrFolder, PMEntity entityWithComponents, PMAutomation powerMILL)
+		{
 			
 			List<Tuple<string,string>> output = new List<Tuple<string,string>>();
 			
 
-			string result = powerMILL.DoCommandEx("print par \"extract(  folder('"+entityTypeOrFolder+"'), 'name')\"").ToString();
+			string result = null;
+			if (extractionType == eExtractionType.FROM_FOLDER ) {
+				
+				result = powerMILL.DoCommandEx("print par \"extract(  folder('"+entityTypeOrFolder+"'), 'name')\"").ToString();
+				
+			} else if (extractionType == eExtractionType.FROM_ENTITY_COMPONENTS) {
+				
+				result = powerMILL.DoCommandEx("print par \"extract(  components(entity('"+entityWithComponents.Identifier+"','"+entityWithComponents.Name+"')), 'name')\"").ToString();
+				
+			} else {
+				throw new Exception();
+			}
  			
  			string[] resultArray = result.Split( new string[]{Environment.NewLine},StringSplitOptions.RemoveEmptyEntries);	
 
@@ -270,7 +414,17 @@ namespace Autodesk.ProductInterface.PowerMILL
 			
  			List<Tuple<int,string>> outputNames = extracted(resultArray,"STRING");
  			
- 			result = powerMILL.DoCommandEx("print par \"extract(folder('"+entityTypeOrFolder+"'), '"+valueName+"')\"").ToString();
+ 			if (extractionType == eExtractionType.FROM_FOLDER ) {
+				
+				result = powerMILL.DoCommandEx("print par \"extract(folder('"+entityTypeOrFolder+"'), '"+valueName+"')\"").ToString();
+				
+			} else if (extractionType == eExtractionType.FROM_ENTITY_COMPONENTS) {
+				
+				result = powerMILL.DoCommandEx("print par \"extract(  components(entity('"+entityWithComponents.Identifier+"','"+entityWithComponents.Name+"')), '"+valueName+"')\"").ToString();
+				
+			} else {
+				throw new Exception();
+			}
  			
  			resultArray = result.Split( new string[]{Environment.NewLine},StringSplitOptions.RemoveEmptyEntries);	
 			

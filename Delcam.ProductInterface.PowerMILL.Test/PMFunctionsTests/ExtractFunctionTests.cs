@@ -339,6 +339,79 @@ namespace Autodesk.ProductInterface.PowerMILLTest
 			CollectionAssert.AreEqual(Enumerable.Range(0,500).Select(item => item.ToString()), ExtractFunction.ExtractStringValue("Toolpath","Tool.Name",_powerMill).Select(item => item.Item2));
         }
         
+        void CreateHoles()
+		{
+			_powerMill.Execute("EDIT PATTERN ; CURVEEDITOR START");
+			_powerMill.Execute("CURVEEDITOR MODE CIRCLE");
+			_powerMill.Execute("CURVEEDITOR CIRCLE RADIUS \"1.1\"");
+			_powerMill.Execute("MODE COORDINPUT COORDINATES 0 0 0");
+			_powerMill.Execute("CURVEEDITOR CIRCLE RADIUS \"2.1\"");
+			_powerMill.Execute("MODE COORDINPUT COORDINATES 10 0 0");
+			_powerMill.Execute("CURVEEDITOR CIRCLE RADIUS \"3.1\"");
+			_powerMill.Execute("MODE COORDINPUT COORDINATES 20 0 0");
+			_powerMill.Execute("CURVEEDITOR CIRCLE RADIUS \"4.1\"");
+			_powerMill.Execute("MODE COORDINPUT COORDINATES 30 0 0");
+			_powerMill.Execute("CURVEEDITOR CIRCLE RADIUS \"5.1\"");
+			_powerMill.Execute("MODE COORDINPUT COORDINATES 40 0 0");
+			_powerMill.Execute("CURVEEDITOR CIRCLE RADIUS \"6.1\"");
+			_powerMill.Execute("MODE COORDINPUT COORDINATES 50 0 0");
+			_powerMill.Execute("CURVEEDITOR MODE DEFAULT");
+			_powerMill.Execute("CURVEEDITOR FINISH ACCEPT");
+			_powerMill.Execute("EDIT FEATURECREATE TYPE HOLE EDIT FEATURECREATE CIRCULAR ON EDIT FEATURECREATE FILTER HOLES EDIT FEATURECREATE TOPDEFINE ABSOLUTE EDIT FEATURECREATE BOTTOMDEFINE ABSOLUTE FORM CANCEL FEATURE FORM CREATEHOLE");
+			_powerMill.Execute("EDIT FEATURECREATE FILTER CURVES EDIT FEATURECREATE TOPDEFINE ABSOLUTE EDIT FEATURECREATE BOTTOMDEFINE ABSOLUTE");
+			_powerMill.Execute("EDIT FEATURECREATE TOPDEFINE ABSOLUTE");
+			_powerMill.Execute("EDIT FEATURECREATE BOTTOMDEFINE ABSOLUTE");
+			_powerMill.Execute("EDIT FEATURECREATE TOP \"0\"");
+			_powerMill.Execute("EDIT FEATURECREATE BOTTOM \"-10\"");
+			_powerMill.Execute("EDIT FEATURECREATE HOLES EDITONAPPLY YES");
+			_powerMill.Execute("EDIT FEATURECREATE HOLES EDITONAPPLY NO");
+			_powerMill.Execute("EDIT FEATURECREATE CREATEHOLES");
+			_powerMill.Execute("EDIT OPTIONS CLOSETOL \"0.001\"");
+			_powerMill.Execute("EDIT PATTERN \"1\" SELECT ALL");
+			_powerMill.Execute("EDIT FEATURECREATE CREATEHOLES");
+			_powerMill.Execute("FORM CANCEL CREATEHOLE");
+		}
+        
+        [Test]
+        public void ExtractDoubleValueFromComponents()
+        {
+			 CreateHoles();
+
+			_powerMill.ActiveProject.Refresh();
+             
+			CollectionAssert.AreEqual(new List<double>{2.2,4.2,6.2,8.2,10.2,12.2}, ExtractFunction.ExtractDoubleValueFromComponets(_powerMill.ActiveProject.FeatureSets.First(),"Diameter",_powerMill).Select(item => Math.Round( item.Item2,2)));
+        }
+        
+        //[Test]
+        public void ExtractIntValueFromComponents()
+        {
+			 CreateHoles();
+
+			_powerMill.ActiveProject.Refresh();
+             
+			//TODO:
+        }
+        
+        //[Test]
+        public void ExtractBoolValueFromComponents()
+        {
+			 CreateHoles();
+
+			_powerMill.ActiveProject.Refresh();
+             
+			//TODO:
+        }
+        
+        [Test]
+        public void ExtractStringValueFromComponents()
+        {
+			 CreateHoles();
+
+			_powerMill.ActiveProject.Refresh();
+             
+			CollectionAssert.AreEqual(new List<string>{"hole","hole","hole","hole","hole","hole"}, ExtractFunction.ExtractStringValueFromComponets(_powerMill.ActiveProject.FeatureSets.First(),"Type",_powerMill).Select(item => item.Item2));
+        }
+        
         #endregion
         
 	}
