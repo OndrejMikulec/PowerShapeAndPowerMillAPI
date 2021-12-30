@@ -376,5 +376,96 @@ namespace Autodesk.ProductInterface.PowerMILL
 			return output;
 		
 		}
+				/// <summary>
+		/// Extracts array[double] values from a collection. Fast method
+		/// A tuple with not implemented variable will be ommited from the list completely!
+		/// </summary>
+		/// <param name="entityTypeOrFolder">Entity type or PowerMill explorer folder</param>
+		/// <param name="valueName">Desired value name</param>
+		/// <param name="powerMILL">The base instance to interact with PowerMILL</param>
+		/// <returns>Item1: entity name, Item2: desired value</returns>
+		public static List<Tuple<string,double[]>> ExtractDoubleArray3Value(string entityTypeOrFolder, string valueName, PMAutomation powerMILL)
+		{
+			return ExtractDoubleArray3Value(eExtractionType.FROM_FOLDER,valueName,entityTypeOrFolder,null,powerMILL);
+		}
+		
+		public static List<Tuple<string,double[]>> ExtractDoubleArray3ValueFromComponets(PMEntity entityWithComponents, string valueName, PMAutomation powerMILL)
+		{
+			return ExtractDoubleArray3Value(eExtractionType.FROM_ENTITY_COMPONENTS,valueName,null,entityWithComponents,powerMILL);
+		}
+		
+		/// <summary>
+		/// Extracts array[double] from a collection. Fast method
+		/// A tuple with not implemented variable will be ommited from the list completely!
+		/// </summary>
+		/// <param name="extractionType">From a entities folder OR from an entity components</param>
+		/// <param name="valueName">Desired value name</param>
+		/// <param name="entityTypeOrFolder">Entity type or PowerMill explorer folder - only for extraction from a folder</param>
+		/// <param name="entityWithComponents">Entity with components - only for extraction from a entity with components</param>
+		/// <param name="powerMILL">The base instance to interact with PowerMILL</param>
+		/// <returns>Item1: entity name, Item2: desired value</returns>
+		private static List<Tuple<string,double[]>> ExtractDoubleArray3Value(eExtractionType extractionType, string valueName, string entityTypeOrFolder, PMEntity entityWithComponents, PMAutomation powerMILL)
+		{
+			
+			List<Tuple<string,double[]>> output = new List<Tuple<string,double[]>>();
+			
+
+			string result = DoExtractCommand(extractionType,"Name",entityTypeOrFolder,entityWithComponents,powerMILL);
+
+ 			
+	
+
+ 			if (string.IsNullOrWhiteSpace(result)) {
+				return new List<Tuple<string,double[]>>();
+ 			} 			
+			
+ 			List<Tuple<int,string>> outputNames = extracted(result,"STRING");
+ 			
+			result = DoExtractCommand(extractionType,valueName+"[0]",entityTypeOrFolder,entityWithComponents,powerMILL);
+			
+ 			List<Tuple<int,string>> outputDoubleValue0 = extracted(result,"REAL");
+ 			
+ 			result = DoExtractCommand(extractionType,valueName+"[1]",entityTypeOrFolder,entityWithComponents,powerMILL);
+			
+ 			List<Tuple<int,string>> outputDoubleValue1 = extracted(result,"REAL");
+ 			
+ 			result = DoExtractCommand(extractionType,valueName+"[2]",entityTypeOrFolder,entityWithComponents,powerMILL);
+			
+ 			List<Tuple<int,string>> outputDoubleValue2 = extracted(result,"REAL");
+
+ 			
+ 			foreach (Tuple<int,string> element in outputNames) {
+ 				string outputValueName = element.Item2;
+ 				
+ 				if (outputDoubleValue0.Count(item => item.Item1 == element.Item1) > 0 
+ 				    && outputDoubleValue2.Count(item => item.Item1 == element.Item1) > 0 
+ 				    && outputDoubleValue2.Count(item => item.Item1 == element.Item1) > 0) {
+ 					
+ 					double parsed0 = double.MaxValue;
+ 					double parsed1 = double.MaxValue;
+ 					double parsed2 = double.MaxValue;
+ 					
+ 					string doubleStr0 = outputDoubleValue0.First(item => item.Item1 == element.Item1).Item2;
+					string doubleStr1 = outputDoubleValue1.First(item => item.Item1 == element.Item1).Item2;
+					string doubleStr2 = outputDoubleValue2.First(item => item.Item1 == element.Item1).Item2;
+					
+					if (doubleStr0.Length > 4 && doubleStr0.Substring(doubleStr0.Length-4) == " [L]") {
+						doubleStr0 = doubleStr0.Substring(0,doubleStr0.Length-4);
+					}
+					if (doubleStr1.Length > 4 && doubleStr1.Substring(doubleStr1.Length-4) == " [L]") {
+						doubleStr1 = doubleStr1.Substring(0,doubleStr1.Length-4);
+					}
+					if (doubleStr2.Length > 4 && doubleStr2.Substring(doubleStr2.Length-4) == " [L]") {
+						doubleStr2 = doubleStr2.Substring(0,doubleStr2.Length-4);
+					}
+ 					if (double.TryParse(doubleStr0, out parsed0) && double.TryParse(doubleStr1, out parsed1) && double.TryParse(doubleStr2, out parsed2)) {
+						output.Add(new Tuple<string, double[]>(outputValueName,new double[]{parsed0,parsed1,parsed2}));
+ 					}
+ 				}
+ 			}
+	
+			return output;
+		
+		}
 	}
 }

@@ -342,6 +342,24 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         }
         
         [Test]
+        public void ExtractDoubleNegativeValue()
+        {
+        	CollectionAssert.IsEmpty( ExtractFunction.ExtractDoubleValue("Workplane","Origin.X",_powerMill));
+        	
+        	List<string> expectedNames = new List<string>{"1","2","3","4","5"};
+        	List<double> expected = new List<double>{-1.1,-1.2,-1.3,-1.4,-1.5};
+        	
+        	foreach (double element in expected) {
+        		_powerMill.Execute("MODE WORKPLANE_CREATE ; INTERACTIVE POINT");
+        		_powerMill.Execute("MODE COORDINPUT COORDINATES "+element+" 0 0");
+        		_powerMill.Execute("DEACTIVATE WORKPLANE");
+        	}
+             
+        	CollectionAssert.AreEqual(expectedNames, ExtractFunction.ReadWorkplanes(_powerMill));
+			CollectionAssert.AreEqual(expected, ExtractFunction.ExtractDoubleValue("Workplane","Origin.X",_powerMill).Select(item => item.Item2));
+        }
+        
+        [Test]
         public void ExtractDoubleValueAngle()
         {
         	CollectionAssert.IsEmpty( ExtractFunction.ExtractDoubleValue("Workplane","Elevation",_powerMill));
@@ -362,6 +380,24 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         	_powerMill.Execute("IMPORT TEMPLATE ENTITY TOOLPATH FILEOPEN \"Finishing/Raster-Finishing.002.ptf\"");
 
 			CollectionAssert.IsEmpty(ExtractFunction.ExtractDoubleValue("Toolpath","Tool.Diameter",_powerMill).Select(item => item.Item2));
+        }
+        
+        [Test]
+        public void ExtractDoubleArray3Value()
+        {
+        	CollectionAssert.IsEmpty( ExtractFunction.ExtractDoubleValue("Workplane","Length",_powerMill));
+        	
+        	List<string> expectedNames = new List<string>{"1","2","3","4","5"};
+        	List<double[]> expected = new List<double[]>{new double[]{1.5,1.6,1.7},new double[]{-2.5,-2.6,-2.7},new double[]{3.5,3.6,3.7},new double[]{-4.5,-4.6,-4.7},new double[]{5.5,5.6,5.7}};
+        	
+        	foreach (double[] element in expected) {
+        		_powerMill.Execute("MODE WORKPLANE_CREATE ; INTERACTIVE POINT");
+        		_powerMill.Execute("MODE COORDINPUT COORDINATES "+element[0]+" "+element[1]+" "+element[2]);
+        		_powerMill.Execute("DEACTIVATE WORKPLANE");
+        	}
+             
+        	CollectionAssert.AreEqual(expectedNames, ExtractFunction.ReadWorkplanes(_powerMill));
+			CollectionAssert.AreEqual(expected, ExtractFunction.ExtractDoubleArray3Value("Workplane","Origin",_powerMill).Select(item => item.Item2));
         }
         
         [Test,Explicit]
