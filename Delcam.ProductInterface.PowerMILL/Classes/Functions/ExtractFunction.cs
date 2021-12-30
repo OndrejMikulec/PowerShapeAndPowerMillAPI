@@ -76,13 +76,35 @@ namespace Autodesk.ProductInterface.PowerMILL
 		{
 			return GetEntityListCorrectSort("Workplane",powerMILL);
 		}
-
 		
-		static List<Tuple<int,string>> extracted(string[] pmOutput, string typeTag)
+		static string DoExtractCommand(eExtractionType extractionType, string valueName, string entityTypeOrFolder, PMEntity entityWithComponents,PMAutomation powerMILL)
+		{
+			if (extractionType == eExtractionType.FROM_FOLDER ) {
+				
+				return powerMILL.DoCommandEx("print par \"extract(  folder('"+entityTypeOrFolder+"'), '"+valueName+"')\"").ToString();
+				
+			} else if (extractionType == eExtractionType.FROM_ENTITY_COMPONENTS) {
+				
+				return powerMILL.DoCommandEx("print par \"extract(  components(entity('"+entityWithComponents.Identifier+"','"+entityWithComponents.Name+"')), '"+valueName+"')\"").ToString();
+				
+			} else {
+				throw new Exception();
+			}			
+		}
+
+		/// <summary>
+		/// Converts the PM output to the STRING list with INT indexes 
+		/// </summary>
+		/// <param name="pmOutput">Powermill output after using the extract() function</param>
+		/// <param name="typeTag">Targeret types in the returned Powermill string. STRING,REAl,ANGLE,INT,ENUM,BOOL</param>
+		/// <returns></returns>
+		static List<Tuple<int,string>> extracted(string pmOutput, string typeTag)
 		{
 			List<Tuple<int,string>> output = new List<Tuple<int, string>>();
 			
-			foreach (string element in pmOutput) {
+			string[] resultArray = pmOutput.Split( new string[]{Environment.NewLine},StringSplitOptions.RemoveEmptyEntries);	
+			
+			foreach (string element in resultArray) {
 				if (!string.IsNullOrWhiteSpace(element) && element.Contains(" ("+typeTag+") ")) {
 					string[] splitted = element.Split(new string[]{" ("+typeTag+") "},StringSplitOptions.None);
 					output.Add(new Tuple<int, string>(int.Parse( splitted[0].Replace("[",string.Empty).Replace("]",string.Empty).Trim()),splitted[1]));
@@ -96,13 +118,13 @@ namespace Autodesk.ProductInterface.PowerMILL
 		{
 			string result = powerMILL.DoCommandEx("print par \"extract( folder('"+entityTypeOrFolder+"'), 'name')\"").ToString();
  			
- 			string[] resultArray = result.Split( new string[]{Environment.NewLine},StringSplitOptions.RemoveEmptyEntries);	
 
- 			if (resultArray == null || resultArray.Length < 1) {
+
+			if (string.IsNullOrWhiteSpace(result)) {
  				return new List<string>();
  			}
 
- 			List<string> output = extracted(resultArray,"STRING").Select(item => item.Item2).ToList();
+ 			List<string> output = extracted(result,"STRING").Select(item => item.Item2).ToList();
 
  			return output;
 
@@ -141,43 +163,22 @@ namespace Autodesk.ProductInterface.PowerMILL
 			List<Tuple<string,double>> output = new List<Tuple<string,double>>();
 			
 
-			string result = null;
-			if (extractionType == eExtractionType.FROM_FOLDER ) {
-				
-				result = powerMILL.DoCommandEx("print par \"extract(  folder('"+entityTypeOrFolder+"'), 'name')\"").ToString();
-				
-			} else if (extractionType == eExtractionType.FROM_ENTITY_COMPONENTS) {
-				
-				result = powerMILL.DoCommandEx("print par \"extract(  components(entity('"+entityWithComponents.Identifier+"','"+entityWithComponents.Name+"')), 'name')\"").ToString();
-				
-			} else {
-				throw new Exception();
-			}
- 			
- 			string[] resultArray = result.Split( new string[]{Environment.NewLine},StringSplitOptions.RemoveEmptyEntries);	
+			string result = DoExtractCommand(extractionType,"Name",entityTypeOrFolder,entityWithComponents,powerMILL);
 
- 			if (resultArray == null || resultArray.Length < 1) {
+ 			
+	
+
+ 			if (string.IsNullOrWhiteSpace(result)) {
  				return new List<Tuple<string,double>>();
  			} 			
 			
- 			List<Tuple<int,string>> outputNames = extracted(resultArray,"STRING");
+ 			List<Tuple<int,string>> outputNames = extracted(result,"STRING");
  			
-			if (extractionType == eExtractionType.FROM_FOLDER ) {
-				
-				result = powerMILL.DoCommandEx("print par \"extract(folder('"+entityTypeOrFolder+"'), '"+valueName+"')\"").ToString();
-				
-			} else if (extractionType == eExtractionType.FROM_ENTITY_COMPONENTS) {
-				
-				result = powerMILL.DoCommandEx("print par \"extract(  components(entity('"+entityWithComponents.Identifier+"','"+entityWithComponents.Name+"')), '"+valueName+"')\"").ToString();
-				
-			} else {
-				throw new Exception();
-			}
- 			
- 			resultArray = result.Split( new string[]{Environment.NewLine},StringSplitOptions.RemoveEmptyEntries);	
+			result = DoExtractCommand(extractionType,valueName,entityTypeOrFolder,entityWithComponents,powerMILL);
+	
 			
- 			List<Tuple<int,string>> outputDoubleValue = extracted(resultArray,"REAL");
-			outputDoubleValue.AddRange(extracted(resultArray,"ANGLE"));
+ 			List<Tuple<int,string>> outputDoubleValue = extracted(result,"REAL");
+			outputDoubleValue.AddRange(extracted(result,"ANGLE"));
  			
  			foreach (Tuple<int,string> element in outputNames) {
  				string outputValueName = element.Item2;
@@ -231,42 +232,19 @@ namespace Autodesk.ProductInterface.PowerMILL
 			List<Tuple<string,int>> output = new List<Tuple<string,int>>();
 			
 
-			string result = null;
-			if (extractionType == eExtractionType.FROM_FOLDER ) {
-				
-				result = powerMILL.DoCommandEx("print par \"extract(  folder('"+entityTypeOrFolder+"'), 'name')\"").ToString();
-				
-			} else if (extractionType == eExtractionType.FROM_ENTITY_COMPONENTS) {
-				
-				result = powerMILL.DoCommandEx("print par \"extract(  components(entity('"+entityWithComponents.Identifier+"','"+entityWithComponents.Name+"')), 'name')\"").ToString();
-				
-			} else {
-				throw new Exception();
-			}
+			string result = DoExtractCommand(extractionType,"Name",entityTypeOrFolder,entityWithComponents,powerMILL);
  			
- 			string[] resultArray = result.Split( new string[]{Environment.NewLine},StringSplitOptions.RemoveEmptyEntries);	
 
- 			if (resultArray == null || resultArray.Length < 1) {
+
+ 			if (string.IsNullOrWhiteSpace(result)) {
  				return new List<Tuple<string,int>>();
  			} 			
 			
- 			List<Tuple<int,string>> outputNames = extracted(resultArray,"STRING");
+ 			List<Tuple<int,string>> outputNames = extracted(result,"STRING");
  			
-			if (extractionType == eExtractionType.FROM_FOLDER ) {
-				
-				result = powerMILL.DoCommandEx("print par \"extract(folder('"+entityTypeOrFolder+"'), '"+valueName+"')\"").ToString();
-				
-			} else if (extractionType == eExtractionType.FROM_ENTITY_COMPONENTS) {
-				
-				result = powerMILL.DoCommandEx("print par \"extract(  components(entity('"+entityWithComponents.Identifier+"','"+entityWithComponents.Name+"')), '"+valueName+"')\"").ToString();
-				
-			} else {
-				throw new Exception();
-			}
- 			
- 			resultArray = result.Split( new string[]{Environment.NewLine},StringSplitOptions.RemoveEmptyEntries);	
+			result = DoExtractCommand(extractionType,valueName,entityTypeOrFolder,entityWithComponents,powerMILL);
 			
- 			List<Tuple<int,string>> outputIntValue = extracted(resultArray,"INT");
+ 			List<Tuple<int,string>> outputIntValue = extracted(result,"INT");
 
  			
  			foreach (Tuple<int,string> element in outputNames) {
@@ -316,42 +294,19 @@ namespace Autodesk.ProductInterface.PowerMILL
 			List<Tuple<string,bool>> output = new List<Tuple<string,bool>>();
 			
 
-			string result = null;
-			if (extractionType == eExtractionType.FROM_FOLDER ) {
-				
-				result = powerMILL.DoCommandEx("print par \"extract(  folder('"+entityTypeOrFolder+"'), 'name')\"").ToString();
-				
-			} else if (extractionType == eExtractionType.FROM_ENTITY_COMPONENTS) {
-				
-				result = powerMILL.DoCommandEx("print par \"extract(  components(entity('"+entityWithComponents.Identifier+"','"+entityWithComponents.Name+"')), 'name')\"").ToString();
-				
-			} else {
-				throw new Exception();
-			}
+			string result = DoExtractCommand(extractionType,"Name",entityTypeOrFolder,entityWithComponents,powerMILL);
  			
- 			string[] resultArray = result.Split( new string[]{Environment.NewLine},StringSplitOptions.RemoveEmptyEntries);	
 
- 			if (resultArray == null || resultArray.Length < 1) {
+
+ 			if (string.IsNullOrWhiteSpace(result)) {
  				return new List<Tuple<string,bool>>();
  			} 			
 			
- 			List<Tuple<int,string>> outputNames = extracted(resultArray,"STRING");
+ 			List<Tuple<int,string>> outputNames = extracted(result,"STRING");
  			
- 			if (extractionType == eExtractionType.FROM_FOLDER ) {
-				
-				result = powerMILL.DoCommandEx("print par \"extract(folder('"+entityTypeOrFolder+"'), '"+valueName+"')\"").ToString();
-				
-			} else if (extractionType == eExtractionType.FROM_ENTITY_COMPONENTS) {
-				
-				result = powerMILL.DoCommandEx("print par \"extract(  components(entity('"+entityWithComponents.Identifier+"','"+entityWithComponents.Name+"')), '"+valueName+"')\"").ToString();
-				
-			} else {
-				throw new Exception();
-			}
- 			
- 			resultArray = result.Split( new string[]{Environment.NewLine},StringSplitOptions.RemoveEmptyEntries);	
-			
- 			List<Tuple<int,string>> outputBoolValue = extracted(resultArray,"BOOL");
+ 			result = DoExtractCommand(extractionType,valueName,entityTypeOrFolder,entityWithComponents,powerMILL);
+
+ 			List<Tuple<int,string>> outputBoolValue = extracted(result,"BOOL");
 
  			
  			foreach (Tuple<int,string> element in outputNames) {
@@ -393,43 +348,20 @@ namespace Autodesk.ProductInterface.PowerMILL
 			List<Tuple<string,string>> output = new List<Tuple<string,string>>();
 			
 
-			string result = null;
-			if (extractionType == eExtractionType.FROM_FOLDER ) {
-				
-				result = powerMILL.DoCommandEx("print par \"extract(  folder('"+entityTypeOrFolder+"'), 'name')\"").ToString();
-				
-			} else if (extractionType == eExtractionType.FROM_ENTITY_COMPONENTS) {
-				
-				result = powerMILL.DoCommandEx("print par \"extract(  components(entity('"+entityWithComponents.Identifier+"','"+entityWithComponents.Name+"')), 'name')\"").ToString();
-				
-			} else {
-				throw new Exception();
-			}
+			string result = DoExtractCommand(extractionType,"Name",entityTypeOrFolder,entityWithComponents,powerMILL);
  			
- 			string[] resultArray = result.Split( new string[]{Environment.NewLine},StringSplitOptions.RemoveEmptyEntries);	
+	
 
- 			if (resultArray == null || resultArray.Length < 1) {
+ 			if (string.IsNullOrWhiteSpace(result)) {
  				return new List<Tuple<string,string>>();
  			} 			
 			
- 			List<Tuple<int,string>> outputNames = extracted(resultArray,"STRING");
+ 			List<Tuple<int,string>> outputNames = extracted(result,"STRING");
  			
- 			if (extractionType == eExtractionType.FROM_FOLDER ) {
-				
-				result = powerMILL.DoCommandEx("print par \"extract(folder('"+entityTypeOrFolder+"'), '"+valueName+"')\"").ToString();
-				
-			} else if (extractionType == eExtractionType.FROM_ENTITY_COMPONENTS) {
-				
-				result = powerMILL.DoCommandEx("print par \"extract(  components(entity('"+entityWithComponents.Identifier+"','"+entityWithComponents.Name+"')), '"+valueName+"')\"").ToString();
-				
-			} else {
-				throw new Exception();
-			}
- 			
- 			resultArray = result.Split( new string[]{Environment.NewLine},StringSplitOptions.RemoveEmptyEntries);	
-			
- 			List<Tuple<int,string>> outputStringValue = extracted(resultArray,"STRING");
- 			outputStringValue.AddRange(extracted(resultArray,"ENUM"));
+ 			result = DoExtractCommand(extractionType,valueName,entityTypeOrFolder,entityWithComponents,powerMILL);
+
+ 			List<Tuple<int,string>> outputStringValue = extracted(result,"STRING");
+ 			outputStringValue.AddRange(extracted(result,"ENUM"));
  			
  			foreach (Tuple<int,string> element in outputNames) {
  				string outputValueName = element.Item2;

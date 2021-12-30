@@ -57,6 +57,8 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         [Test]
         public void ReadNCPrograms()
         {
+        	CollectionAssert.IsEmpty( ExtractFunction.ReadNCPrograms(_powerMill));
+        	
         	List<string> expected = new List<string>{"1","2","3","4","5"};
         	
         	foreach (string element in expected) {
@@ -69,6 +71,8 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         [Test]
         public void ReadBoundaries()
         {
+        	CollectionAssert.IsEmpty( ExtractFunction.ReadBoundaries(_powerMill));
+        	
         	List<string> expected = new List<string>{"1","2","3","4","5"};
         	
         	foreach (string element in expected) {
@@ -81,6 +85,8 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         [Test]
         public void ReadFeatureGroups()
         {
+        	CollectionAssert.IsEmpty( ExtractFunction.ReadFeatureGroups(_powerMill));
+        	
         	List<string> expected = new List<string>{"1","2","3","4","5"};
         	
         	foreach (string element in expected) {
@@ -93,6 +99,8 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         [Test]
         public void ReadFeatureSets()
         {
+        	CollectionAssert.IsEmpty( ExtractFunction.ReadFeatureSets(_powerMill));
+        	
         	List<string> expected = new List<string>{"1","2","3","4","5"};
         	
         	foreach (string element in expected) {
@@ -105,6 +113,8 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         [Test]
         public void ReadGroups()
         {
+        	CollectionAssert.IsEmpty( ExtractFunction.ReadGroups(_powerMill));
+        	
         	List<string> expected = new List<string>{"1","2","3","4","5"};
         	
         	foreach (string element in expected) {
@@ -117,6 +127,8 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         [Test]
         public void ReadLevelOrSets()
         {
+        	CollectionAssert.IsEmpty( ExtractFunction.ReadLevelOrSets(_powerMill));
+        	
         	List<string> expected = new List<string>{"1","2","3","4","5"};
         	
         	foreach (string element in expected) {
@@ -129,6 +141,8 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         [Test]
         public void ReadMachineTools()
         {
+        	CollectionAssert.IsEmpty( ExtractFunction.ReadMachineTools(_powerMill));
+        	
         	List<string> expected = new List<string>{"1","2","3","4","5"};
         	
         	foreach (string element in expected) {
@@ -141,6 +155,8 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         [Test]
         public void ReadModels()
         {
+        	CollectionAssert.IsEmpty( ExtractFunction.ReadModels(_powerMill));
+        	
         	List<string> expected = new List<string>{"1","2","3","4","5"};
         	
         	foreach (string element in expected) {
@@ -153,6 +169,8 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         [Test]
         public void ReadPatterns()
         {
+        	CollectionAssert.IsEmpty( ExtractFunction.ReadPatterns(_powerMill));
+        	
         	List<string> expected = new List<string>{"1","2","3","4","5"};
         	
         	foreach (string element in expected) {
@@ -165,6 +183,8 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         [Test]
         public void ReadSetups()
         {
+        	CollectionAssert.IsEmpty( ExtractFunction.ReadSetups(_powerMill));
+        	
         	List<string> expected = new List<string>{"1","2","3","4","5"};
         	
         	foreach (string element in expected) {
@@ -177,6 +197,8 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         [Test]
         public void ReadStockModels()
         {
+        	CollectionAssert.IsEmpty( ExtractFunction.ReadStockModels(_powerMill));
+        	
         	List<string> expected = new List<string>{"1","2","3","4","5"};
         	
         	foreach (string element in expected) {
@@ -189,6 +211,8 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         [Test]
         public void ReadToolpaths()
         {
+        	CollectionAssert.IsEmpty( ExtractFunction.ReadToolpaths(_powerMill));
+        	
         	List<string> expected = new List<string>{"1","2","3","4","5"};
         	
         	foreach (string element in expected) {
@@ -202,6 +226,8 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         [Test]
         public void ReadTools()
         {
+        	CollectionAssert.IsEmpty( ExtractFunction.ReadTools(_powerMill));
+        	
         	List<string> expected = new List<string>{"1","2","3","4","5"};
         	
         	foreach (string element in expected) {
@@ -214,6 +240,8 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         [Test]
         public void ReadWorkplanes()
         {
+        	CollectionAssert.IsEmpty( ExtractFunction.ReadWorkplanes(_powerMill));
+        	
         	List<string> expected = new List<string>{"1","2","3","4","5"};
         	
         	foreach (string element in expected) {
@@ -226,6 +254,8 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         [Test]
         public void ExtractIntValue()
         {
+        	CollectionAssert.IsEmpty( ExtractFunction.ExtractIntValue("Tool","Number.Value",_powerMill));
+        	
         	List<int> expected = new List<int>{1,2,3,4,5};
         	
         	foreach (int element in expected) {
@@ -248,6 +278,8 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         [Test]
         public void ExtractBoolValue()
         {
+        	CollectionAssert.IsEmpty( ExtractFunction.ExtractBoolValue("Tool","IDTracksName",_powerMill));
+        	
         	List<string> expectedNames = new List<string>{"1","2","3","4","5"};
         	List<bool> expected = new List<bool>{false,true,false,true,false};
         	
@@ -271,6 +303,8 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         [Test]
         public void ExtractStringValue()
         {
+        	CollectionAssert.IsEmpty( ExtractFunction.ExtractStringValue("Tool","Description",_powerMill));
+        	
         	List<string> expected = new List<string>{"1","2","3","4","5"};
         	
         	foreach (string element in expected) {
@@ -293,6 +327,8 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         [Test]
         public void ExtractDoubleValue()
         {
+        	CollectionAssert.IsEmpty( ExtractFunction.ExtractDoubleValue("Tool","Length",_powerMill));
+        	
         	List<string> expectedNames = new List<string>{"1","2","3","4","5"};
         	List<double> expected = new List<double>{1.1,1.2,1.3,1.4,1.5};
         	
@@ -308,6 +344,8 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         [Test]
         public void ExtractDoubleValueAngle()
         {
+        	CollectionAssert.IsEmpty( ExtractFunction.ExtractDoubleValue("Workplane","Elevation",_powerMill));
+        	
         	List<string> expected = new List<string>{"1","2","3","4","5"};
         	
         	foreach (string element in expected) {
@@ -375,6 +413,10 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         [Test]
         public void ExtractDoubleValueFromComponents()
         {
+        	PMFeatureSet feat = _powerMill.ActiveProject.FeatureSets.CreateFeatureset("1");
+        	CollectionAssert.IsEmpty( ExtractFunction.ExtractDoubleValueFromComponets(feat,"Diameter",_powerMill));
+        	_powerMill.ActiveProject.FeatureSets.Clear();
+        	
 			 CreateHoles();
 
 			_powerMill.ActiveProject.Refresh();
@@ -385,6 +427,10 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         //[Test]
         public void ExtractIntValueFromComponents()
         {
+        	PMFeatureSet feat = _powerMill.ActiveProject.FeatureSets.CreateFeatureset("1");
+        	CollectionAssert.IsEmpty( ExtractFunction.ExtractDoubleValueFromComponets(feat,"XXXX",_powerMill));
+        	_powerMill.ActiveProject.FeatureSets.Clear();
+        	
 			 CreateHoles();
 
 			_powerMill.ActiveProject.Refresh();
@@ -395,6 +441,10 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         //[Test]
         public void ExtractBoolValueFromComponents()
         {
+        	PMFeatureSet feat = _powerMill.ActiveProject.FeatureSets.CreateFeatureset("1");
+        	CollectionAssert.IsEmpty( ExtractFunction.ExtractDoubleValueFromComponets(feat,"XXXX",_powerMill));
+        	_powerMill.ActiveProject.FeatureSets.Clear();
+        	
 			 CreateHoles();
 
 			_powerMill.ActiveProject.Refresh();
@@ -405,6 +455,10 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         [Test]
         public void ExtractStringValueFromComponents()
         {
+        	PMFeatureSet feat = _powerMill.ActiveProject.FeatureSets.CreateFeatureset("1");
+        	CollectionAssert.IsEmpty( ExtractFunction.ExtractDoubleValueFromComponets(feat,"Type",_powerMill));
+        	_powerMill.ActiveProject.FeatureSets.Clear();
+        	
 			 CreateHoles();
 
 			_powerMill.ActiveProject.Refresh();
