@@ -252,8 +252,15 @@ namespace Autodesk.ProductInterface.PowerMILL
  				
  				if (outputIntValue.Count(item => item.Item1 == element.Item1) > 0) {
  					int parsed = -1;
- 					if (int.TryParse(outputIntValue.First(item => item.Item1 == element.Item1).Item2,out parsed)) {
- 						output.Add(new Tuple<string, int>(outputValueName,parsed));
+					string intString = outputIntValue.First(item => item.Item1 == element.Item1).Item2;
+					if (intString.Contains("=")) {
+						if (int.TryParse(intString.Split(new string[]{"="},StringSplitOptions.RemoveEmptyEntries).Last(), out parsed)) {
+	 						output.Add(new Tuple<string, int>(outputValueName,parsed));
+	 					}
+ 					} else {
+ 						if (int.TryParse(intString, out parsed)) {
+	 						output.Add(new Tuple<string, int>(outputValueName,parsed));
+	 					}
  					}
  				}
  			}
