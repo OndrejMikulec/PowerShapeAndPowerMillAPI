@@ -186,8 +186,9 @@ namespace Autodesk.ProductInterface.PowerMILL
  				if (outputDoubleValue.Count(item => item.Item1 == element.Item1) > 0) {
  					double parsed = double.MaxValue;
 					string doubleStr = outputDoubleValue.First(item => item.Item1 == element.Item1).Item2;
-					if (doubleStr.Length > 4 && doubleStr.Substring(doubleStr.Length-4) == " [L]") {
-						doubleStr = doubleStr.Substring(0,doubleStr.Length-4);
+					string[] doubleStrSplitted = doubleStr.Split(new String[]{" "},StringSplitOptions.None);
+					if (doubleStrSplitted.Length > 1) {
+						doubleStr = doubleStrSplitted[0];
 					}
  					if (double.TryParse(doubleStr, out parsed)) {
  						output.Add(new Tuple<string, double>(outputValueName,parsed));
@@ -456,14 +457,17 @@ namespace Autodesk.ProductInterface.PowerMILL
 					string doubleStr1 = outputDoubleValue1.First(item => item.Item1 == element.Item1).Item2;
 					string doubleStr2 = outputDoubleValue2.First(item => item.Item1 == element.Item1).Item2;
 					
-					if (doubleStr0.Length > 4 && doubleStr0.Substring(doubleStr0.Length-4) == " [L]") {
-						doubleStr0 = doubleStr0.Substring(0,doubleStr0.Length-4);
+					string[] doubleStrSplitted0 = doubleStr0.Split(new String[]{" "},StringSplitOptions.None);
+					if (doubleStrSplitted0.Length > 1) {
+						doubleStr0 = doubleStrSplitted0[0];
 					}
-					if (doubleStr1.Length > 4 && doubleStr1.Substring(doubleStr1.Length-4) == " [L]") {
-						doubleStr1 = doubleStr1.Substring(0,doubleStr1.Length-4);
+					string[] doubleStrSplitted1 = doubleStr1.Split(new String[]{" "},StringSplitOptions.None);
+					if (doubleStrSplitted1.Length > 1) {
+						doubleStr1 = doubleStrSplitted1[0];
 					}
-					if (doubleStr2.Length > 4 && doubleStr2.Substring(doubleStr2.Length-4) == " [L]") {
-						doubleStr2 = doubleStr2.Substring(0,doubleStr2.Length-4);
+					string[] doubleStrSplitted2 = doubleStr2.Split(new String[]{" "},StringSplitOptions.None);
+					if (doubleStrSplitted2.Length > 1) {
+						doubleStr2 = doubleStrSplitted2[0];
 					}
  					if (double.TryParse(doubleStr0, out parsed0) && double.TryParse(doubleStr1, out parsed1) && double.TryParse(doubleStr2, out parsed2)) {
 						output.Add(new Tuple<string, double[]>(outputValueName,new double[]{parsed0,parsed1,parsed2}));

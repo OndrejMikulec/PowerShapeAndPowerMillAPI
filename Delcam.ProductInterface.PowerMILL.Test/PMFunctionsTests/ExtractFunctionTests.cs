@@ -324,7 +324,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest
 			CollectionAssert.IsEmpty(ExtractFunction.ExtractStringValue("Toolpath","Tool.Name",_powerMill).Select(item => item.Item2));
         }
         
-        [Test]
+        [Test] //[L]
         public void ExtractDoubleValue()
         {
         	CollectionAssert.IsEmpty( ExtractFunction.ExtractDoubleValue("Tool","Length",_powerMill));
@@ -339,6 +339,23 @@ namespace Autodesk.ProductInterface.PowerMILLTest
              
         	CollectionAssert.AreEqual(expectedNames, ExtractFunction.ReadTools(_powerMill));
 			CollectionAssert.AreEqual(expected, ExtractFunction.ExtractDoubleValue("Tool","Length",_powerMill).Select(item => item.Item2));
+        }
+        
+        [Test] //[1/T]
+        public void ExtractDoubleValue2()
+        {
+        	CollectionAssert.IsEmpty( ExtractFunction.ExtractDoubleValue("Tool","Length",_powerMill));
+        	
+        	List<string> expectedNames = new List<string>{"1","2","3","4","5"};
+        	List<double> expected = new List<double>{1.1,1.2,1.3,1.4,1.5};
+        	
+        	foreach (double element in expected) {
+        		_powerMill.Execute(@"IMPORT TEMPLATE ENTITY TOOLPATH TMPLTSELECTORGUI ""Finishing/Constant-Z-Finishing.002.ptf""");
+        		_powerMill.Execute("$entity('Toolpath','').SpindleSpeed.Value = "+element);
+        	}
+             
+        	CollectionAssert.AreEqual(expectedNames, ExtractFunction.ReadToolpaths(_powerMill));
+			CollectionAssert.AreEqual(expected, ExtractFunction.ExtractDoubleValue("Toolpath","SpindleSpeed.Value",_powerMill).Select(item => item.Item2));
         }
         
         [Test]
