@@ -276,6 +276,20 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         }
         
         [Test]
+        public void ExtractIntEquality()
+        {
+        	List<int> expected = new List<int>{1,2,3,4,5};
+        	
+        	foreach (int element in expected) {
+        		_powerMill.Execute("CREATE Tool "+element);
+        		_powerMill.Execute("$entity('Tool','').Number.Value = "+element);
+        	}
+             
+        	CollectionAssert.AreEqual(ExtractFunction.ExtractIntValue("Tool","Number.Value",_powerMill), ExtractFunction.ExtractIntValue("Tool","Number.Value",_powerMill));
+
+        }
+        
+        [Test]
         public void ExtractBoolValue()
         {
         	CollectionAssert.IsEmpty( ExtractFunction.ExtractBoolValue("Tool","IDTracksName",_powerMill));
@@ -301,6 +315,22 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         }
         
         [Test]
+        public void ExtractBoolEquality()
+        {
+        	CollectionAssert.IsEmpty( ExtractFunction.ExtractBoolValue("Tool","IDTracksName",_powerMill));
+        	
+        	List<string> expectedNames = new List<string>{"1","2","3","4","5"};
+        	List<bool> expected = new List<bool>{false,true,false,true,false};
+        	
+        	foreach (bool element in expected) {
+        		_powerMill.Execute("CREATE Tool ;");
+        		_powerMill.Execute("$entity('Tool','').IDTracksName = "+element);
+        	}
+             
+			CollectionAssert.AreEqual(ExtractFunction.ExtractBoolValue("Tool","IDTracksName",_powerMill), ExtractFunction.ExtractBoolValue("Tool","IDTracksName",_powerMill));
+        }
+        
+        [Test]
         public void ExtractStringValue()
         {
         	CollectionAssert.IsEmpty( ExtractFunction.ExtractStringValue("Tool","Description",_powerMill));
@@ -322,6 +352,22 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         	_powerMill.Execute("IMPORT TEMPLATE ENTITY TOOLPATH FILEOPEN \"Finishing/Raster-Finishing.002.ptf\"");
 
 			CollectionAssert.IsEmpty(ExtractFunction.ExtractStringValue("Toolpath","Tool.Name",_powerMill).Select(item => item.ExtractedValue));
+        }
+        
+        [Test]
+        public void ExtractStringEquality()
+        {
+        	CollectionAssert.IsEmpty( ExtractFunction.ExtractStringValue("Tool","Description",_powerMill));
+        	
+        	List<string> expected = new List<string>{"1","2","3","4","5"};
+        	
+        	foreach (string element in expected) {
+        		_powerMill.Execute("CREATE Tool "+element);
+        		_powerMill.Execute("$entity('Tool','').Description = "+element);
+        	}
+             
+
+			CollectionAssert.AreEqual(ExtractFunction.ExtractStringValue("Tool","Description",_powerMill), ExtractFunction.ExtractStringValue("Tool","Description",_powerMill));
         }
         
         [Test] //[L]
@@ -399,6 +445,23 @@ namespace Autodesk.ProductInterface.PowerMILLTest
 			CollectionAssert.IsEmpty(ExtractFunction.ExtractDoubleValue("Toolpath","Tool.Diameter",_powerMill).Select(item => item.ExtractedValue));
         }
         
+        [Test] //[L]
+        public void ExtractDoubleEquality()
+        {
+        	CollectionAssert.IsEmpty( ExtractFunction.ExtractDoubleValue("Tool","Length",_powerMill));
+        	
+        	List<string> expectedNames = new List<string>{"1","2","3","4","5"};
+        	List<double> expected = new List<double>{1.1,1.2,1.3,1.4,1.5};
+        	
+        	foreach (double element in expected) {
+        		_powerMill.Execute("CREATE Tool ;");
+        		_powerMill.Execute("$entity('Tool','').Length = "+element);
+        	}
+             
+
+			CollectionAssert.AreEqual(ExtractFunction.ExtractDoubleValue("Tool","Length",_powerMill), ExtractFunction.ExtractDoubleValue("Tool","Length",_powerMill));
+        }
+        
         [Test]
         public void ExtractDoubleArray3Value()
         {
@@ -415,6 +478,24 @@ namespace Autodesk.ProductInterface.PowerMILLTest
              
         	CollectionAssert.AreEqual(expectedNames, ExtractFunction.ReadWorkplanes(_powerMill));
 			CollectionAssert.AreEqual(expected, ExtractFunction.ExtractDoubleArray3Value("Workplane","Origin",_powerMill).Select(item => item.ExtractedValue));
+        }
+        
+        [Test]
+        public void ExtractDoubleArray3Equality()
+        {
+        	CollectionAssert.IsEmpty( ExtractFunction.ExtractDoubleValue("Workplane","Length",_powerMill));
+        	
+        	List<string> expectedNames = new List<string>{"1","2","3","4","5"};
+        	List<double[]> expected = new List<double[]>{new double[]{1.5,1.6,1.7},new double[]{-2.5,-2.6,-2.7},new double[]{3.5,3.6,3.7},new double[]{-4.5,-4.6,-4.7},new double[]{5.5,5.6,5.7}};
+        	
+        	foreach (double[] element in expected) {
+        		_powerMill.Execute("MODE WORKPLANE_CREATE ; INTERACTIVE POINT");
+        		_powerMill.Execute("MODE COORDINPUT COORDINATES "+element[0]+" "+element[1]+" "+element[2]);
+        		_powerMill.Execute("DEACTIVATE WORKPLANE");
+        	}
+             
+
+			CollectionAssert.AreEqual(ExtractFunction.ExtractDoubleArray3Value("Workplane","Origin",_powerMill), ExtractFunction.ExtractDoubleArray3Value("Workplane","Origin",_powerMill));
         }
         
         [Test,Explicit]
