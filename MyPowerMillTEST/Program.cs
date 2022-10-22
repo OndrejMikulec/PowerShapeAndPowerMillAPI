@@ -74,15 +74,15 @@ namespace MyPowerMillTEST
 				
 				foreach (PMFeatureSet feat in app.ActiveProject.FeatureSets) {
 					Console.WriteLine(feat.Name);
-					foreach (Tuple<string,double> comp in ExtractFunction.ExtractDoubleValueFromComponets(feat,"Diameter",app)) {
+					foreach (ExtractedDouble comp in ExtractFunction.ExtractDoubleValueFromComponets(feat,"Diameter",app)) {
 						Console.WriteLine(comp);
 					}
 				}
 				
 				foreach (PMFeatureSet feat in app.ActiveProject.FeatureSets) {
 					Console.WriteLine(feat.Name);
-					foreach (Tuple<string,string> comp in ExtractFunction.ExtractStringValueFromComponets(feat,"Name",app)) {
-						Console.WriteLine(app.ExecuteEx("print \""+feat.Name+"."+comp.Item2+".Point[0]\""));
+					foreach (ExtractedString comp in ExtractFunction.ExtractStringValueFromComponets(feat,"Name",app)) {
+						Console.WriteLine(app.ExecuteEx("print \""+feat.Name+"."+comp.ExtractedValue+".Point[0]\""));
 					}
 				}
 				

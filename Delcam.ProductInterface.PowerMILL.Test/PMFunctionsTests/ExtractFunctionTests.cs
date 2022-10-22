@@ -264,7 +264,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         	}
              
         	CollectionAssert.AreEqual(expected.Select(item => item.ToString()), ExtractFunction.ReadTools(_powerMill));
-			CollectionAssert.AreEqual(expected, ExtractFunction.ExtractIntValue("Tool","Number.Value",_powerMill).Select(item => item.Item2));
+			CollectionAssert.AreEqual(expected, ExtractFunction.ExtractIntValue("Tool","Number.Value",_powerMill).Select(item => item.ExtractedValue));
         }
         
         [Test]
@@ -272,7 +272,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         {
         	_powerMill.Execute("IMPORT TEMPLATE ENTITY TOOLPATH FILEOPEN \"Finishing/Raster-Finishing.002.ptf\"");
 
-			CollectionAssert.IsEmpty(ExtractFunction.ExtractBoolValue("Toolpath","Tool.Number.Value",_powerMill).Select(item => item.Item2));
+			CollectionAssert.IsEmpty(ExtractFunction.ExtractBoolValue("Toolpath","Tool.Number.Value",_powerMill).Select(item => item.ExtractedValue));
         }
         
         [Test]
@@ -289,7 +289,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         	}
              
         	CollectionAssert.AreEqual(expectedNames, ExtractFunction.ReadTools(_powerMill));
-			CollectionAssert.AreEqual(expected, ExtractFunction.ExtractBoolValue("Tool","IDTracksName",_powerMill).Select(item => item.Item2));
+			CollectionAssert.AreEqual(expected, ExtractFunction.ExtractBoolValue("Tool","IDTracksName",_powerMill).Select(item => item.ExtractedValue));
         }
         
         [Test]
@@ -297,7 +297,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         {
         	_powerMill.Execute("IMPORT TEMPLATE ENTITY TOOLPATH FILEOPEN \"Finishing/Raster-Finishing.002.ptf\"");
 
-			CollectionAssert.IsEmpty(ExtractFunction.ExtractBoolValue("Toolpath","Tool.IDTracksName",_powerMill).Select(item => item.Item2));
+			CollectionAssert.IsEmpty(ExtractFunction.ExtractBoolValue("Toolpath","Tool.IDTracksName",_powerMill).Select(item => item.ExtractedValue));
         }
         
         [Test]
@@ -313,7 +313,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         	}
              
         	CollectionAssert.AreEqual(expected, ExtractFunction.ReadTools(_powerMill));
-			CollectionAssert.AreEqual(expected, ExtractFunction.ExtractStringValue("Tool","Description",_powerMill).Select(item => item.Item2));
+			CollectionAssert.AreEqual(expected, ExtractFunction.ExtractStringValue("Tool","Description",_powerMill).Select(item => item.ExtractedValue));
         }
         
         [Test]
@@ -321,7 +321,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         {
         	_powerMill.Execute("IMPORT TEMPLATE ENTITY TOOLPATH FILEOPEN \"Finishing/Raster-Finishing.002.ptf\"");
 
-			CollectionAssert.IsEmpty(ExtractFunction.ExtractStringValue("Toolpath","Tool.Name",_powerMill).Select(item => item.Item2));
+			CollectionAssert.IsEmpty(ExtractFunction.ExtractStringValue("Toolpath","Tool.Name",_powerMill).Select(item => item.ExtractedValue));
         }
         
         [Test] //[L]
@@ -338,7 +338,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         	}
              
         	CollectionAssert.AreEqual(expectedNames, ExtractFunction.ReadTools(_powerMill));
-			CollectionAssert.AreEqual(expected, ExtractFunction.ExtractDoubleValue("Tool","Length",_powerMill).Select(item => item.Item2));
+			CollectionAssert.AreEqual(expected, ExtractFunction.ExtractDoubleValue("Tool","Length",_powerMill).Select(item => item.ExtractedValue));
         }
         
         [Test] //[1/T]
@@ -355,7 +355,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         	}
              
         	CollectionAssert.AreEqual(expectedNames, ExtractFunction.ReadToolpaths(_powerMill));
-			CollectionAssert.AreEqual(expected, ExtractFunction.ExtractDoubleValue("Toolpath","SpindleSpeed.Value",_powerMill).Select(item => item.Item2));
+			CollectionAssert.AreEqual(expected, ExtractFunction.ExtractDoubleValue("Toolpath","SpindleSpeed.Value",_powerMill).Select(item => item.ExtractedValue));
         }
         
         [Test]
@@ -373,7 +373,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         	}
              
         	CollectionAssert.AreEqual(expectedNames, ExtractFunction.ReadWorkplanes(_powerMill));
-			CollectionAssert.AreEqual(expected, ExtractFunction.ExtractDoubleValue("Workplane","Origin.X",_powerMill).Select(item => item.Item2));
+			CollectionAssert.AreEqual(expected, ExtractFunction.ExtractDoubleValue("Workplane","Origin.X",_powerMill).Select(item => item.ExtractedValue));
         }
         
         [Test]
@@ -388,7 +388,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         	}
              
         	CollectionAssert.AreEqual(expected, ExtractFunction.ReadWorkplanes(_powerMill));
-        	CollectionAssert.AreEqual(Enumerable.Repeat(90.0,5), ExtractFunction.ExtractDoubleValue("Workplane","Elevation",_powerMill).Select(item => item.Item2));
+        	CollectionAssert.AreEqual(Enumerable.Repeat(90.0,5), ExtractFunction.ExtractDoubleValue("Workplane","Elevation",_powerMill).Select(item => item.ExtractedValue));
         }
         
         [Test]
@@ -396,7 +396,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         {
         	_powerMill.Execute("IMPORT TEMPLATE ENTITY TOOLPATH FILEOPEN \"Finishing/Raster-Finishing.002.ptf\"");
 
-			CollectionAssert.IsEmpty(ExtractFunction.ExtractDoubleValue("Toolpath","Tool.Diameter",_powerMill).Select(item => item.Item2));
+			CollectionAssert.IsEmpty(ExtractFunction.ExtractDoubleValue("Toolpath","Tool.Diameter",_powerMill).Select(item => item.ExtractedValue));
         }
         
         [Test]
@@ -414,7 +414,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest
         	}
              
         	CollectionAssert.AreEqual(expectedNames, ExtractFunction.ReadWorkplanes(_powerMill));
-			CollectionAssert.AreEqual(expected, ExtractFunction.ExtractDoubleArray3Value("Workplane","Origin",_powerMill).Select(item => item.Item2));
+			CollectionAssert.AreEqual(expected, ExtractFunction.ExtractDoubleArray3Value("Workplane","Origin",_powerMill).Select(item => item.ExtractedValue));
         }
         
         [Test,Explicit]
@@ -427,7 +427,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest
     		_powerMill.LoadProject(temp.Directories.First());
         		
         	CollectionAssert.AreEqual(Enumerable.Range(0,500).Select(item => item.ToString()), ExtractFunction.ReadToolpaths(_powerMill));
-			CollectionAssert.AreEqual(Enumerable.Range(0,500).Select(item => item.ToString()), ExtractFunction.ExtractStringValue("Toolpath","Tool.Name",_powerMill).Select(item => item.Item2));
+			CollectionAssert.AreEqual(Enumerable.Range(0,500).Select(item => item.ToString()), ExtractFunction.ExtractStringValue("Toolpath","Tool.Name",_powerMill).Select(item => item.ExtractedValue));
         }
         
         void CreateHoles()
@@ -474,7 +474,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest
 
 			_powerMill.ActiveProject.Refresh();
              
-			CollectionAssert.AreEqual(new List<double>{2.2,4.2,6.2,8.2,10.2,12.2}, ExtractFunction.ExtractDoubleValueFromComponets(_powerMill.ActiveProject.FeatureSets.First(),"Diameter",_powerMill).Select(item => Math.Round( item.Item2,2)));
+			CollectionAssert.AreEqual(new List<double>{2.2,4.2,6.2,8.2,10.2,12.2}, ExtractFunction.ExtractDoubleValueFromComponets(_powerMill.ActiveProject.FeatureSets.First(),"Diameter",_powerMill).Select(item => Math.Round( item.ExtractedValue,2)));
         }
         
         //[Test]
@@ -516,7 +516,7 @@ namespace Autodesk.ProductInterface.PowerMILLTest
 
 			_powerMill.ActiveProject.Refresh();
              
-			CollectionAssert.AreEqual(new List<string>{"hole","hole","hole","hole","hole","hole"}, ExtractFunction.ExtractStringValueFromComponets(_powerMill.ActiveProject.FeatureSets.First(),"Type",_powerMill).Select(item => item.Item2));
+			CollectionAssert.AreEqual(new List<string>{"hole","hole","hole","hole","hole","hole"}, ExtractFunction.ExtractStringValueFromComponets(_powerMill.ActiveProject.FeatureSets.First(),"Type",_powerMill).Select(item => item.ExtractedValue));
         }
         
         #endregion
