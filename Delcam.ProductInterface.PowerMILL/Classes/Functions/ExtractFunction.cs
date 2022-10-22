@@ -137,14 +137,16 @@ namespace Autodesk.ProductInterface.PowerMILL
 		/// <param name="valueName">Desired value name</param>
 		/// <param name="powerMILL">The base instance to interact with PowerMILL</param>
 		/// <returns>Item1: entity name, Item2: desired value</returns>
-		public static List<Tuple<string,double>> ExtractDoubleValue(string entityTypeOrFolder, string valueName, PMAutomation powerMILL)
+		public static List<ExtractedDouble> ExtractDoubleValue(string entityTypeOrFolder, string valueName, PMAutomation powerMILL)
 		{
-			return ExtractDoubleValue(eExtractionType.FROM_FOLDER,valueName,entityTypeOrFolder,null,powerMILL);
+			return ExtractDoubleValue(eExtractionType.FROM_FOLDER,valueName,entityTypeOrFolder,null,powerMILL)
+				.Select(item => new ExtractedDouble(item.Item1,item.Item2)).ToList();
 		}
 		
-		public static List<Tuple<string,double>> ExtractDoubleValueFromComponets(PMEntity entityWithComponents, string valueName, PMAutomation powerMILL)
+		public static List<ExtractedDouble> ExtractDoubleValueFromComponets(PMEntity entityWithComponents, string valueName, PMAutomation powerMILL)
 		{
-			return ExtractDoubleValue(eExtractionType.FROM_ENTITY_COMPONENTS,valueName,null,entityWithComponents,powerMILL);
+			return ExtractDoubleValue(eExtractionType.FROM_ENTITY_COMPONENTS,valueName,null,entityWithComponents,powerMILL)
+				.Select(item => new ExtractedDouble(item.Item1,item.Item2)).ToList();
 		}
 		
 		/// <summary>
@@ -207,14 +209,16 @@ namespace Autodesk.ProductInterface.PowerMILL
 		/// <param name="valueName">Desired value name</param>
 		/// <param name="powerMILL">The base instance to interact with PowerMILL</param>
 		/// <returns>Item1: entity name, Item2: desired value</returns>
-		public static List<Tuple<string,int>> ExtractIntValue(string entityTypeOrFolder, string valueName, PMAutomation powerMILL)
+		public static List<ExtractedInt> ExtractIntValue(string entityTypeOrFolder, string valueName, PMAutomation powerMILL)
 		{
-			return ExtractIntValue(eExtractionType.FROM_FOLDER,valueName,entityTypeOrFolder,null,powerMILL);
+			return ExtractIntValue(eExtractionType.FROM_FOLDER,valueName,entityTypeOrFolder,null,powerMILL)
+				.Select(item => new ExtractedInt(item.Item1,item.Item2)).ToList();
 		}
 		
-		public static List<Tuple<string,int>> ExtractIntValueFromComponets(PMEntity entityWithComponents, string valueName, PMAutomation powerMILL)
+		public static List<ExtractedInt> ExtractIntValueFromComponets(PMEntity entityWithComponents, string valueName, PMAutomation powerMILL)
 		{
-			return ExtractIntValue(eExtractionType.FROM_ENTITY_COMPONENTS,valueName,null,entityWithComponents,powerMILL);
+			return ExtractIntValue(eExtractionType.FROM_ENTITY_COMPONENTS,valueName,null,entityWithComponents,powerMILL)
+				.Select(item => new ExtractedInt(item.Item1,item.Item2)).ToList();
 		}
 		
 		/// <summary>
@@ -277,14 +281,16 @@ namespace Autodesk.ProductInterface.PowerMILL
 		/// <param name="valueName">Desired value name</param>
 		/// <param name="powerMILL">The base instance to interact with PowerMILL</param>
 		/// <returns>Item1: entity name, Item2: desired value</returns>
-		public static List<Tuple<string,bool>> ExtractBoolValue(string entityTypeOrFolder, string valueName, PMAutomation powerMILL)
+		public static List<ExtractedBool> ExtractBoolValue(string entityTypeOrFolder, string valueName, PMAutomation powerMILL)
 		{
-			return ExtractBoolValue(eExtractionType.FROM_FOLDER,valueName,entityTypeOrFolder,null,powerMILL);
+			return ExtractBoolValue(eExtractionType.FROM_FOLDER,valueName,entityTypeOrFolder,null,powerMILL)
+				.Select(item => new ExtractedBool(item.Item1,item.Item2)).ToList();
 		}
 		
-		public static List<Tuple<string,bool>> ExtractBoolValueFromComponets(PMEntity entityWithComponents, string valueName, PMAutomation powerMILL)
+		public static List<ExtractedBool> ExtractBoolValueFromComponets(PMEntity entityWithComponents, string valueName, PMAutomation powerMILL)
 		{
-			return ExtractBoolValue(eExtractionType.FROM_ENTITY_COMPONENTS,valueName,null,entityWithComponents,powerMILL);
+			return ExtractBoolValue(eExtractionType.FROM_ENTITY_COMPONENTS,valueName,null,entityWithComponents,powerMILL)
+				.Select(item => new ExtractedBool(item.Item1,item.Item2)).ToList();
 		}
 		/// <summary>
 		/// Extracts a bool values from a collection. Fast method
@@ -340,14 +346,16 @@ namespace Autodesk.ProductInterface.PowerMILL
 		/// <param name="valueName">Desired value name</param>
 		/// <param name="powerMILL">The base instance to interact with PowerMILL</param>
 		/// <returns>Item1: entity name, Item2: desired value</returns>
-		public static List<Tuple<string,string>> ExtractStringValue(string entityTypeOrFolder, string valueName, PMAutomation powerMILL)
+		public static List<ExtractedString> ExtractStringValue(string entityTypeOrFolder, string valueName, PMAutomation powerMILL)
 		{
-			return ExtractStringValue(eExtractionType.FROM_FOLDER,valueName,entityTypeOrFolder,null,powerMILL);
+			return ExtractStringValue(eExtractionType.FROM_FOLDER,valueName,entityTypeOrFolder,null,powerMILL)
+				.Select(item => new ExtractedString(item.Item1,item.Item2)).ToList();
 		}
 		
-		public static List<Tuple<string,string>> ExtractStringValueFromComponets(PMEntity entityWithComponents, string valueName, PMAutomation powerMILL)
+		public static List<ExtractedString> ExtractStringValueFromComponets(PMEntity entityWithComponents, string valueName, PMAutomation powerMILL)
 		{
-			return ExtractStringValue(eExtractionType.FROM_ENTITY_COMPONENTS,valueName,null,entityWithComponents,powerMILL);
+			return ExtractStringValue(eExtractionType.FROM_ENTITY_COMPONENTS,valueName,null,entityWithComponents,powerMILL)
+				.Select(item => new ExtractedString(item.Item1,item.Item2)).ToList();
 		}
 		
 		private static List<Tuple<string,string>> ExtractStringValue(eExtractionType extractionType, string valueName, string entityTypeOrFolder, PMEntity entityWithComponents, PMAutomation powerMILL)
@@ -392,14 +400,16 @@ namespace Autodesk.ProductInterface.PowerMILL
 		/// <param name="valueName">Desired value name</param>
 		/// <param name="powerMILL">The base instance to interact with PowerMILL</param>
 		/// <returns>Item1: entity name, Item2: desired value</returns>
-		public static List<Tuple<string,double[]>> ExtractDoubleArray3Value(string entityTypeOrFolder, string valueName, PMAutomation powerMILL)
+		public static List<ExtractedDoubleArray3> ExtractDoubleArray3Value(string entityTypeOrFolder, string valueName, PMAutomation powerMILL)
 		{
-			return ExtractDoubleArray3Value(eExtractionType.FROM_FOLDER,valueName,entityTypeOrFolder,null,powerMILL);
+			return ExtractDoubleArray3Value(eExtractionType.FROM_FOLDER,valueName,entityTypeOrFolder,null,powerMILL)
+				.Select(item => new ExtractedDoubleArray3(item.Item1,item.Item2)).ToList();
 		}
 		
-		public static List<Tuple<string,double[]>> ExtractDoubleArray3ValueFromComponets(PMEntity entityWithComponents, string valueName, PMAutomation powerMILL)
+		public static List<ExtractedDoubleArray3> ExtractDoubleArray3ValueFromComponets(PMEntity entityWithComponents, string valueName, PMAutomation powerMILL)
 		{
-			return ExtractDoubleArray3Value(eExtractionType.FROM_ENTITY_COMPONENTS,valueName,null,entityWithComponents,powerMILL);
+			return ExtractDoubleArray3Value(eExtractionType.FROM_ENTITY_COMPONENTS,valueName,null,entityWithComponents,powerMILL)
+				.Select(item => new ExtractedDoubleArray3(item.Item1,item.Item2)).ToList();
 		}
 		
 		/// <summary>

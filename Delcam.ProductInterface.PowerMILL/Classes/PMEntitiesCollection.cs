@@ -265,11 +265,11 @@ namespace Autodesk.ProductInterface.PowerMILL
     		System.Reflection.FieldInfo[] fi = typeof(T).GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
             string identifier = fi[0].GetValue(null).ToString();
     		
-    		IEnumerable<Tuple<string,bool>> extractedAndExistsInThisList = ExtractFunction.ExtractBoolValue(identifier,parameterName,_powerMILL).Where(item => this.Count(item2 => item2.Name == item.Item1) > 0);
+    		IEnumerable<ExtractedBool> extractedAndExistsInThisList = ExtractFunction.ExtractBoolValue(identifier,parameterName,_powerMILL).Where(item => this.Count(item2 => item2.Name == item.EntityName) > 0);
     		
-    		foreach (Tuple<string,bool> element in extractedAndExistsInThisList) {
-    			if (this[element.Item1] != null) {
-    				output.Add(new Tuple<T, bool>( this[element.Item1],element.Item2));
+    		foreach (ExtractedBool element in extractedAndExistsInThisList) {
+    			if (this[element.EntityName] != null) {
+    				output.Add(new Tuple<T, bool>( this[element.EntityName],element.ExtractedValue));
     			}
     		}
     		
@@ -288,11 +288,11 @@ namespace Autodesk.ProductInterface.PowerMILL
     		System.Reflection.FieldInfo[] fi = typeof(T).GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
             string identifier = fi[0].GetValue(null).ToString();
     		
-    		IEnumerable<Tuple<string,double>> extractedAndExistsInThisList = ExtractFunction.ExtractDoubleValue(identifier,parameterName,_powerMILL).Where(item => this.Count(item2 => item2.Name == item.Item1) > 0);
+    		IEnumerable<ExtractedDouble> extractedAndExistsInThisList = ExtractFunction.ExtractDoubleValue(identifier,parameterName,_powerMILL).Where(item => this.Count(item2 => item2.Name == item.EntityName) > 0);
     		
-    		foreach (Tuple<string,double> element in extractedAndExistsInThisList) {
-    			if (this[element.Item1] != null) {
-    				output.Add(new Tuple<T, double>( this[element.Item1],element.Item2));
+    		foreach (ExtractedDouble element in extractedAndExistsInThisList) {
+    			if (this[element.EntityName] != null) {
+    				output.Add(new Tuple<T, double>( this[element.EntityName],element.ExtractedValue));
     			}
     		}
     		
@@ -306,11 +306,11 @@ namespace Autodesk.ProductInterface.PowerMILL
     		System.Reflection.FieldInfo[] fi = typeof(T).GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
             string identifier = fi[0].GetValue(null).ToString();
     		
-    		IEnumerable<Tuple<string,int>> extractedAndExistsInThisList = ExtractFunction.ExtractIntValue(identifier,parameterName,_powerMILL).Where(item => this.Count(item2 => item2.Name == item.Item1) > 0);
+    		IEnumerable<ExtractedInt> extractedAndExistsInThisList = ExtractFunction.ExtractIntValue(identifier,parameterName,_powerMILL).Where(item => this.Count(item2 => item2.Name == item.EntityName) > 0);
     		
-    		foreach (Tuple<string,int> element in extractedAndExistsInThisList) {
-    			if (this[element.Item1] != null) {
-    				output.Add(new Tuple<T, int>( this[element.Item1],element.Item2));
+    		foreach (ExtractedInt element in extractedAndExistsInThisList) {
+    			if (this[element.EntityName] != null) {
+    				output.Add(new Tuple<T, int>( this[element.EntityName],element.ExtractedValue));
     			}
     		}
     		
@@ -324,11 +324,11 @@ namespace Autodesk.ProductInterface.PowerMILL
     		System.Reflection.FieldInfo[] fi = typeof(T).GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
             string identifier = fi[0].GetValue(null).ToString();
     		
-    		IEnumerable<Tuple<string,string>> extractedAndExistsInThisList = ExtractFunction.ExtractStringValue(identifier,parameterName,_powerMILL).Where(item => this.Count(item2 => item2.Name == item.Item1) > 0);
+    		IEnumerable<ExtractedString> extractedAndExistsInThisList = ExtractFunction.ExtractStringValue(identifier,parameterName,_powerMILL).Where(item => this.Count(item2 => item2.Name == item.EntityName) > 0);
     		
-    		foreach (Tuple<string,string> element in extractedAndExistsInThisList) {
-    			if (this[element.Item1] != null) {
-    				output.Add(new Tuple<T, string>( this[element.Item1],element.Item2));
+    		foreach (ExtractedString element in extractedAndExistsInThisList) {
+    			if (this[element.EntityName] != null) {
+    				output.Add(new Tuple<T, string>( this[element.EntityName],element.ExtractedValue));
     			}
     		}
     		

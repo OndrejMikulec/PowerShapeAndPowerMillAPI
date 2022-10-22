@@ -39,62 +39,62 @@ namespace Autodesk.ProductInterface.PowerMILL
         {
         	List<PMTool> output = new List<PMTool>();
         	
-            List<Tuple<string,string>> extracted = ExtractFunction.ExtractStringValue("tool","type",powerMILL);
+            List<ExtractedString> extracted = ExtractFunction.ExtractStringValue("tool","type",powerMILL);
             
-            foreach (Tuple<string,string> element in extracted.Where(item => names.Contains(item.Item1))) {
+            foreach (ExtractedString element in extracted.Where(item => names.Contains(item.EntityName))) {
                      	
-            	switch (element.Item2)
+            	switch (element.ExtractedValue)
 	            {
 	                case "end_mill":
-            			output.Add( new PMToolEndMill(powerMILL, element.Item1));
+            			output.Add( new PMToolEndMill(powerMILL, element.EntityName));
             			break;
 	                case "ball_nosed":
-            			output.Add( new PMToolBallNosed(powerMILL, element.Item1));
+            			output.Add( new PMToolBallNosed(powerMILL, element.EntityName));
             			break;
 	                case "tip_radiused":
-            			output.Add( new PMToolTipRadiused(powerMILL, element.Item1));
+            			output.Add( new PMToolTipRadiused(powerMILL, element.EntityName));
             			break;
 	                case "taper_spherical":
-            			output.Add( new PMToolTaperedSpherical(powerMILL, element.Item1));
+            			output.Add( new PMToolTaperedSpherical(powerMILL, element.EntityName));
             			break;
 	                case "taper_tipped":
-            			output.Add( new PMToolTaperedTipped(powerMILL, element.Item1));
+            			output.Add( new PMToolTaperedTipped(powerMILL, element.EntityName));
             			break;
 	                case "drill":
-            			output.Add( new PMToolDrill(powerMILL, element.Item1));
+            			output.Add( new PMToolDrill(powerMILL, element.EntityName));
             			break;
 	                case "tipped_disc":
-            			output.Add( new PMToolTippedDisc(powerMILL, element.Item1));
+            			output.Add( new PMToolTippedDisc(powerMILL, element.EntityName));
             			break;
 	                case "off_centre_tip_rad":
-            			output.Add( new PMToolOffCentreTipRadiused(powerMILL, element.Item1));
+            			output.Add( new PMToolOffCentreTipRadiused(powerMILL, element.EntityName));
             			break;
 	                case "tap":
-	                      output.Add( new PMToolTap(powerMILL, element.Item1));
+	                      output.Add( new PMToolTap(powerMILL, element.EntityName));
 	                      break;
 	                case "thread_mill":
-	                      output.Add( new PMToolThreadMill(powerMILL, element.Item1));
+	                      output.Add( new PMToolThreadMill(powerMILL, element.EntityName));
 	                      break;
 	                case "form":
-	                    output.Add( new PMToolForm(powerMILL, element.Item1));
+	                    output.Add( new PMToolForm(powerMILL, element.EntityName));
 	                    break;
 	                case "routing":
-	                    output.Add( new PMToolRouting(powerMILL, element.Item1));
+	                    output.Add( new PMToolRouting(powerMILL, element.EntityName));
 	                    break;
 	                case "barrel":
-	                    output.Add( new PMToolBarrel(powerMILL, element.Item1));
+	                    output.Add( new PMToolBarrel(powerMILL, element.EntityName));
 	                    break;
 	                case "dovetail":
-	                    output.Add( new PMToolDovetail(powerMILL, element.Item1));
+	                    output.Add( new PMToolDovetail(powerMILL, element.EntityName));
 	                    break;
 	                case "turn_profiling":
-	                    output.Add( new PMToolProfilingTurning(powerMILL, element.Item1));
+	                    output.Add( new PMToolProfilingTurning(powerMILL, element.EntityName));
 	                    break;
 	                case "turn_grooving":
-	                    output.Add( new PMToolGroovingTurning(powerMILL, element.Item1));
+	                    output.Add( new PMToolGroovingTurning(powerMILL, element.EntityName));
 	                    break;
 	                default:
-	                    output.Add( new PMTool(powerMILL, element.Item1));
+	                    output.Add( new PMTool(powerMILL, element.EntityName));
 	                    break;
 	            }
             }
